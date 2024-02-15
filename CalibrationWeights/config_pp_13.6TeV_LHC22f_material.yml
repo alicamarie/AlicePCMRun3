@@ -1,0 +1,22 @@
+# This code is based on the code provided by Daiki Sekihata in his repository
+# https://github.com/dsekihat/photon_sw_run3 for photon analysis in ALICE Run 3
+
+
+common:
+    system : "pp"
+    energy : 13.6 #center-of-mass energy in TeV
+    period : "LHC22f"
+    period_mc : "LHC23d1k" #anchored MC
+    rxy_bin: [0, 14, 30, 42, 58, 69, 90, 180]
+    eta_bin : [[11, 15],[15, 20], [20, 25], [25, 29], [11, 20], [20, 29]]
+    pt_cuts: [0.05, 0.1, 0.2]
+data:
+    subsystems: 
+        - name: "PCM"
+          cutnames:
+          - "qc"
+mc:
+    subsystems: 
+        - name: "PCM"
+          cutnames:
+          - "qc"
