@@ -1,0 +1,175 @@
+import os, sys, shutil
+import math
+import argparse
+import numpy as np
+import ctypes
+import yaml
+import ROOT
+import datetime
+ROOT.gROOT.SetBatch(True);
+from ROOT import TFile, THashList, TF1
+#from analyze_pair import analyze_ptspectrum
+from FitInvMassForPt import PairAnalyzer
+from PlotInvMass import PlotInvMass
+
+parser = argparse.ArgumentParser('Example program');
+parser.add_argument("-i", "--input" , default="AnalysisResults.root", type=str, help="path to the root file you want to analyze", required=True)
+parser.add_argument("-c", "--config", default="config.yml", type=str, help="path to the *.yml configuration file", required=True)
+parser.add_argument("-t", "--type"  , default="data" , type=str, help="run type [data or mc]", required=True)
+parser.add_argument("-s", "--suffix"  , default="" , type=str, help="suffix for output file name", required=False)
+args = parser.parse_args();
+
+filename = args.input;
+with open(args.config, "r", encoding="utf-8") as config_yml:
+    config = yaml.safe_load(config_yml)
+#_________________________________________________________________________________________
+def run(filename, config, ismc, suffix=""):
+    print(sys._getframe().f_code.co_name);
+    arr_pt = np.array(config["common"]["pt_bin"],dtype=float);
+    print("pT binning = ",arr_pt);
+    print("ismc = ",ismc);
+    print("input = ",filename);
+    rootfile = TFile.Open(filename,"READ");
+    meson = config["common"]["meson"];
+    #print(config);
+
+    list_fit_func = config["common"]["fit_func"];
+    #list_fit_bkg = config["common"]["fit_bkg"];
+
+    list_fit_min = config["common"]["fit_min"];
+    list_fit_max = config["common"]["fit_max"];
+    if len(list_fit_min) != len(list_fit_max):
+        return;
+
+    list_integral_min = config["common"]["integral_min"];
+    list_integral_max = config["common"]["integral_max"];
+    if len(list_integral_min) != len(list_integral_max):
+        return;
+
+    nsys = len(config[args.type]['subsystems']);
+    print(nsys); 
+
+    meson = config["common"]["meson"];
+
+    if config["common"]["do_ptspectrum"] == True:
+        outname = "{0}_{1}_ptspectrum_{2}_{3}TeV_{4}{5}.root".format(meson, args.type, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix);
+        print("output file name = ",outname);
+        outfile = TFile(outname,"RECREATE");
+
+        if ismc:
+            return;
+            for ic in range(0,nc):
+                outlist = analyze_ptspectrum_efficiency(rootfile,cutnames[ic],arr_mee,arr_ptee);
+                outlist.SetOwner(True);
+                outfile.WriteTObject(outlist);
+                outlist.Clear();
+        else:
+            ana_pi0 = PairAnalyzer(meson, filename, "pi0eta-to-gammagamma");
+            ana_pi0.set_arr_pt(arr_pt);
+            for isys in range(0,nsys):
+                ssname = config[args.type]['subsystems'][isys]['name']; #subsystem name
+                ana_pi0.set_subsystem(ssname);
+                ana_pi0.set_xtitle("#it{m}_{#gamma#gamma} (GeV/#it{c}^{2})");
+                ana_pi0.set_ytitle("#it{p}_{T,#gamma#gamma} (GeV/#it{c}^{2})");
+                print("analyze subsystem", ssname);
+                cutnames = config[args.type]["subsystems"][isys]['cutnames']
+                print("cutnames", cutnames); 
+                nc = len(cutnames);
+                outlist_ss = THashList();
+                outlist_ss.SetName(ssname);
+                outlist_ss.SetOwner(True);
+                for ic in range(0,nc):
+                    cutname = cutnames[ic];
+                    ana_pi0.set_cutname(cutname);
+                    outlist_cut = THashList();
+                    outlist_cut.SetName(cutname);
+                    outlist_cut.SetOwner(True);
+                    outlist_ss.Add(outlist_cut);
+                    for ifunc in list_fit_func:
+                        ana_pi0.set_fit_function(ifunc);
+                        outlist_func = THashList();
+                        outlist_func.SetName(ifunc);
+                        outlist_func.SetOwner(True);
+                        outlist_cut.Add(outlist_func);
+                        for ir in range(0, len(list_fit_min)):
+                            fit_min = list_fit_min[ir];
+                            fit_max = list_fit_max[ir];
+                            ana_pi0.set_fit_range(fit_min, fit_max);
+                            integral_min = list_integral_min[0];
+                            integral_max = list_integral_max[0];
+                            ana_pi0.set_integral_range(integral_min, integral_max);
+                            outlist_fit_range = ana_pi0.analyze_ptspectrum();
+                            outlist_fit_range.SetName("fit_{0:3.2f}_{1:3.2f}_GeVc2".format(fit_min, fit_max));
+                            outlist_func.Add(outlist_fit_range);
+                outfile.WriteTObject(outlist_ss);
+                outlist_ss.Clear();
+            
+            plot_pi0 = PlotInvMass(meson, filename, "pi0eta-to-gammagamma");
+            plot_pi0.set_arr_pt(arr_pt);
+            for isys in range(0,nsys):
+                ssname = config[args.type]['subsystems'][isys]['name']; #subsystem name
+                plot_pi0.set_subsystem(ssname);
+                print("plot subsystem", ssname);
+                cutnames = config[args.type]["subsystems"][isys]['cutnames']
+                print("cutnames", cutnames); 
+                nc = len(cutnames);
+                outlist_ss = THashList();
+                outlist_ss.SetName(ssname);
+                outlist_ss.SetOwner(True);
+            #     for ic in range(0,nc):
+            # #         cutname = cutnames[ic];
+            # #         plot_pi0.set_cutname(cutname);
+            # #         outlist_cut = THashList();
+            # #         outlist_cut.SetName(cutname);
+            # #         outlist_cut.SetOwner(True);
+            # #         outlist_ss.Add(outlist_cut);
+            # #         for ifunc in list_fit_func:
+            # #             plot_pi0.set_fit_function(ifunc);
+            # #             outlist_func = THashList();
+            # #             outlist_func.SetName(ifunc);
+            # #             outlist_func.SetOwner(True);
+            # #             outlist_cut.Add(outlist_func);
+            # #             for ir in range(0, len(list_fit_min)):
+            # #                 fit_min = list_fit_min[ir];
+            # #                 fit_max = list_fit_max[ir];
+            # #                 ana_pi0.set_fit_range(fit_min, fit_max);
+            # #                 integral_min = list_integral_min[0];
+            # #                 integral_max = list_integral_max[0];
+            # #                 plot_pi0.set_integral_range(integral_min, integral_max);
+            # #                 outlist_fit_range = ana_pi0.analyze_ptspectrum();
+            # #                 outlist_fit_range.SetName("fit_{0:3.2f}_{1:3.2f}_GeVc2".format(fit_min, fit_max));
+            # #                 outlist_func.Add(outlist_fit_range);
+            # #     outfile.WriteTObject(outlist_ss);
+            # #     outlist_ss.Clear();
+            del ana_pi0;
+            # del plot_pi0;
+        outfile.Close();
+    else:
+        print("please check what to do in",args.config);
+
+    rootfile.Close();
+#_________________________________________________________________________________________
+ismc = False;
+if args.type == "data":
+    ismc = False;
+elif args.type == "mc":
+    ismc = True;
+else:
+    print("unknown type.sys.exit()");
+    sys.exit();
+run(filename,config,ismc,args.suffix);
+
+# cutname = "qc"
+# period_mc = "LHC23d1k";
+# period_data = "LHC22f"
+# suffix = "AnyTrack";
+# filename = "/Users/alicamarieenderich/AnalysisResults_HL_106682.root"
+# config_file = "/Users/alicamarieenderich/material_budget_FSP_update/config_pp_13.6TeV_LHC22f_material.yml"
+# with open(config_file, "r", encoding="utf-8") as config_yml:
+#     config = yaml.safe_load(config_yml)
+# date = datetime.date.today().strftime("%Y%m%d");
+# folder = "/Users/alicamarieenderich/{0}_invariant_mass_plots/".format(date);  
+# os.makedirs(folder, exist_ok=True);
+
+# run(filename,config,ismc,args.suffix);
+
