@@ -36,7 +36,7 @@ def make_common_style(g1,marker,size,color,width=1,fill=0):
 
 def draw_comparison_parameters(list_data0, list_data1, index, fit_variable, date, period_str):
         ymin = [125,  1*1e-3, 1e-8]
-        ymax = [140, 20*1e-3, 1e-2]
+        ymax = [145, 25*1e-3, 1e-2]
         for i in range(len(list_data0)):
             print("MAX", list_data0[i].GetMaximum(),list_data1[i].GetMaximum())
     #canvas plotting
@@ -74,8 +74,8 @@ def draw_comparison_parameters(list_data0, list_data1, index, fit_variable, date
         color = [kRed+1, kBlue+1, kGreen+2, kMagenta+2, kCyan+1]
         for i in range(len(list_data0)):
                 print(i, list_data0[i].GetTitle(), len(list_data0))
-                make_common_style(list_data0[i], 20, 0.9, color[i], 1, 0);
-                make_common_style(list_data1[i], 25, 0.9, color[i], 1, 0);
+                make_common_style(list_data0[i], 20, 1.5, color[i], 1, 0);
+                make_common_style(list_data1[i], 25, 1.5, color[i], 1, 0); #0.9
 
                 if list_data0[0].GetTitle() == "mean":
                     list_data0[i].Scale(1000.)
@@ -102,26 +102,27 @@ def draw_comparison_parameters(list_data0, list_data1, index, fit_variable, date
         txt.Draw();
         ROOT.SetOwnership(txt,False);
 
-        txt = TPaveText(0.50,0.75,0.88,0.82,"NDC");
+        txt = TPaveText(0.50,0.70,0.95,0.82,"NDC");
         txt.SetFillColor(kWhite);
         txt.SetFillStyle(0);
         txt.SetBorderSize(0);
         txt.SetTextAlign(32);#middle,left
         txt.SetTextFont(42);#helvetica
-        txt.SetTextSize(0.03);
+        txt.SetTextSize(0.045);
         txt.AddText("ALICE this thesis");
         txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
         txt.Draw();
         ROOT.SetOwnership(txt,False);
 
-        leg = TLegend(0.58,0.60,0.87,0.75);
+        leg = TLegend(0.50,0.50,0.95 ,0.70);
         leg.SetBorderSize(0);
         leg.SetFillColor(kWhite);
         leg.SetFillStyle(0);
-        leg.SetTextSize(0.03);
+        leg.SetTextSize(0.045);
         leg.SetTextAlign(32);
         leg.SetTextFont(42);#helvetica
         cut = ['analysis_analysis', 'qc_qc', 'qc_ITSTPC_qc_ITSTPC', 'qc_TPConly_qc_TPConly']
+                # cut = ['analysis_analysis', 'qc_qc', 'qc_ITSTPC_qc_ITSTPC', 'qc_TPConly_qc_TPConly']
         for i in range(len(list_data0)):
             leg.AddEntry(list_data0[i], "{0}".format(cut[i]),"LP");
         leg.Draw("");
@@ -131,7 +132,7 @@ def draw_comparison_parameters(list_data0, list_data1, index, fit_variable, date
         leg.SetBorderSize(0);
         leg.SetFillColor(kWhite);
         leg.SetFillStyle(0);
-        leg.SetTextSize(0.03);
+        leg.SetTextSize(0.045);
         leg.SetTextAlign(12);
         leg.SetTextFont(42);#helvetica
         leg.AddEntry(list_data0[0], "Data #gamma candidates (LHC22f)","LP");
@@ -172,7 +173,7 @@ def draw_comparison_parameters(list_data0, list_data1, index, fit_variable, date
                 h1ratio.Reset();
                 h1ratio.Sumw2();
                 h1ratio.Divide(list_data0[i], list_data1[i], 1., 1., "G");
-                make_common_style(h1ratio, 20, 0.9, color[i], 1, 0);
+                make_common_style(h1ratio, 20, 1.5, color[i], 1, 0); #0.9
                 h1ratio.Draw("E0same");
                 h1ratio.SetDirectory(0);
                 ROOT.SetOwnership(h1ratio,False);
@@ -315,7 +316,7 @@ for i in range(len(period_array)):
     with open(config_file, "r", encoding="utf-8") as config_yml:
         config = yaml.safe_load(config_yml)
     # Date or prefix "this_thesis"
-    date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
+    date ="presentation" #"this_thesis" #datetime.date.today().strftime("%Y%m%d"); "presentation" #
     folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots/".format(date, period);  
     os.makedirs(folder, exist_ok=True);
     # input files from fitting process
@@ -323,3 +324,8 @@ for i in range(len(period_array)):
     filename_data1 = "/Users/alicamarieenderich/this_thesis_LHC23zc_invariant_mass_plots/this_thesis_LHC23zc_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
     filename_data2 = "/Users/alicamarieenderich/this_thesis_LHC22o_minBias_invariant_mass_plots/this_thesis_LHC22o_minBias_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
     filename_mc = "/Users/alicamarieenderich/this_thesis_LHC23d1k_invariant_mass_plots/this_thesis_LHC23d1k_pi0_mc_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+    print(config_file)
+    print(period)
+    print(filename)
+    run(filename_data0, filename_mc, config,type,folder, period_str)
+    print("input period_str", period_str)

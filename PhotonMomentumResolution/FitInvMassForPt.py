@@ -136,7 +136,7 @@ class PairAnalyzer:
         half_maximum_plus = maximum_plus / 2
         left_x_plus = tf1_fwhm_plus_err.GetX(half_maximum_plus, 0, maximum_x_plus);
         right_x_plus = tf1_fwhm_plus_err.GetX(half_maximum_plus, maximum_x_plus, 1);
-        FWHM_plus = right_x_plus-left_x_plus
+        FWHM_plus = (right_x_plus-left_x_plus)/TMath.Sqrt(8*TMath.Log(2))
 
         # Calculate MINUS-error with (FWHM-FWHM_err)
         tf1_fwhm_minus_err     = TF1("tf1_fwhm_plus_err",   "(x<[1]) * ([0]*(TMath::Exp(-0.5*(TMath::Power((x-[1])/[2],2)))+TMath::Exp((x-[1])/[3])*(1.-TMath::Exp(-0.5*(TMath::Power((x-[1])/[2],2))))))+\
@@ -150,11 +150,12 @@ class PairAnalyzer:
         half_maximum_minus = maximum_minus / 2
         left_x_minus = tf1_fwhm_minus_err.GetX(half_maximum_minus, 0, maximum_x_minus);
         right_x_minus = tf1_fwhm_minus_err.GetX(half_maximum_minus, maximum_x_minus, 1);
-        FWHM_minus = right_x_minus-left_x_minus
+        FWHM_minus = (right_x_minus-left_x_minus)/TMath.Sqrt(8*TMath.Log(2))
 
         # Calculate TOTAL error
         FWHM_err = max(abs(FWHM_plus-FWHM), abs(FWHM_minus-FWHM))
-        FWHM_err = FWHM_err/TMath.Sqrt(8*TMath.Log(2))/2
+        FWHM_err = FWHM_err/2
+        print("FWHM calc: ", FWHM*1e3, "+/-", FWHM_err*1e3, ";", FWHM_plus*1e3, FWHM_minus*1e3)
         return tf1_fwhm, FWHM, FWHM_err
     
     def calc_FWHM_MC(self, histo, params, paramsErr):
@@ -184,7 +185,7 @@ class PairAnalyzer:
         half_maximum_plus = maximum_plus / 2
         left_x_plus = tf1_fwhm_plus_err.GetX(half_maximum_plus, 0, maximum_x_plus);
         right_x_plus = tf1_fwhm_plus_err.GetX(half_maximum_plus, maximum_x_plus, 1);
-        FWHM_plus = right_x_plus-left_x_plus
+        FWHM_plus = (right_x_plus-left_x_plus)/TMath.Sqrt(8*TMath.Log(2))
 
         # Calculate MINUS-error with (FWHM-FWHM_err)
         tf1_fwhm_minus_err     = TF1("tf1_fwhm_plus_err",   "(x<[1]) * ([0]*(TMath::Exp(-0.5*(TMath::Power((x-[1])/[2],2)))+TMath::Exp((x-[1])/[3])*(1.-TMath::Exp(-0.5*(TMath::Power((x-[1])/[2],2))))))+\
@@ -198,11 +199,11 @@ class PairAnalyzer:
         half_maximum_minus = maximum_minus / 2
         left_x_minus = tf1_fwhm_minus_err.GetX(half_maximum_minus, 0, maximum_x_minus);
         right_x_minus = tf1_fwhm_minus_err.GetX(half_maximum_minus, maximum_x_minus, 1);
-        FWHM_minus = right_x_minus-left_x_minus
+        FWHM_minus = (right_x_minus-left_x_minus)/TMath.Sqrt(8*TMath.Log(2))
 
         # Calculate TOTAL error
         FWHM_err = max(abs(FWHM_plus-FWHM), abs(FWHM_minus-FWHM))
-        FWHM_err = FWHM_err/TMath.Sqrt(8*TMath.Log(2))/2  # in equivalents to sigma and divided by 2 for error propagation
+        FWHM_err = FWHM_err/2  # in equivalents to sigma and divided by 2 for error propagation
         return tf1_fwhm, FWHM, FWHM_err
 
     def set_yield_range(self, yield_min, yield_max):

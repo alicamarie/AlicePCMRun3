@@ -95,96 +95,108 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
     txt.SetTextAlign(22);#centered,left
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.04);
-    txt.AddText("R_{xy} vs. z, M.C. gen. #gamma (LHC23d1k)")
+    txt.AddText("structures in ITS2 and parts of TPC")
+    # txt.AddText("R_{xy} vs. z, M.C. gen. #gamma (LHC23d1k)")
     txt.Draw();
     ROOT.SetOwnership(txt,False);
-    ALICEtext2D("simulation")
+    txt = TPaveText(0.52,0.77,0.78,0.85,"NDC");
+    txt.SetFillColor(kWhite);
+    txt.SetFillStyle(1001);
+    txt.SetBorderSize(0);
+    # txt.SetTextColor(kRed)
+    txt.SetTextAlign(32);#middle,left
+    txt.SetTextFont(42);#helvetica
+    txt.SetTextSize(0.03);
+    txt.AddText("ALICE simulation")
+    txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
+    txt.Draw();
+    ROOT.SetOwnership(txt,False);
 
 
 
     if structures == True:
         R1 =1e-1* (26.7+22.7)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (30.1+34.6)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
 
         R1 =1e-1* (37.8+42.1)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (194.4 + 197.7)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (243.0 + 247.0)/2
         line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (342.3 + 345.4)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kRed);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
-        line1.SetLineWidth(2);
+        line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (391.8 + 394.9)/2
-        line3 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line3.SetLineColor(kRed);
+        line3 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line3.SetLineColor(kMagenta);
         line3.SetLineStyle(1);
-        line3.SetLineWidth(2);
+        line3.SetLineWidth(3);
         line3.Draw("");
         ROOT.SetOwnership(line3,False);
     
         R1 =1e-1* (449+461)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kBlack);
+        line1 =TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
         line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (496 + 508)/2
-        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line1.SetLineColor(kBlack);
+        line1 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line1.SetLineColor(kMagenta);
         line1.SetLineStyle(1);
         line1.SetLineWidth(3);
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
     
         R1 =1e-1* (540 + 550)/2
-        line2 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line2.SetLineColor(kBlack);
+        line2 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line2.SetLineColor(kMagenta);
         line2.SetLineStyle(1);
         line2.SetLineWidth(3);
         line2.Draw("");
         ROOT.SetOwnership(line2,False);
 
         R1 =60.6
-        line4 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
+        line4 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
         line4.SetLineColor(kMagenta);
         line4.SetLineStyle(1);
         line4.SetLineWidth(3);
@@ -192,8 +204,8 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
         ROOT.SetOwnership(line4,False);
 
         R1 =78.8
-        line5 = TLine(RZ_line_cut(R1, 0.9, 7)+3,R1, RZ_line_cut(-R1, 0.9, -7)-3, R1);
-        line5.SetLineColor(kPink+5);
+        line5 = TLine(RZ_line_cut(R1, 0.9, 7)+5,R1, RZ_line_cut(-R1, 0.9, -7)-5, R1);
+        line5.SetLineColor(kMagenta);
         line5.SetLineStyle(1);
         line5.SetLineWidth(3);
         line5.Draw("");
@@ -211,7 +223,7 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
         leg.AddEntry(line5, "TPC inner field cage vessel", "L")
         #if generated == True:
          #   leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
-        leg.Draw("");
+        # leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
 

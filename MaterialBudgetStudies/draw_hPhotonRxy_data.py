@@ -45,8 +45,9 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     h2_data.SetZTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} N_{#gamma} ");
     h2_data.GetZaxis().SetTitleOffset(1.9);
     h2_data.SetDirectory(0);
-    h2_data.GetXaxis().SetRangeUser(-100,100);
-    h2_data.GetYaxis().SetRangeUser(-100,100);
+    h2_data.GetXaxis().SetRangeUser(0,100); # previous: -100
+    h2_data.GetYaxis().SetRangeUser(0,100); # previous: -100
+    h2_data.GetXaxis().SetTitleOffset(1.9)
     ROOT.SetOwnership(h2_data, False);
 
 #   hGammaRxy.Scale(1/dr);
@@ -73,6 +74,7 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     txt.SetTextAlign(22);#centered,left
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.05);
+   # txt.AddText("#gamma-ray tomography of ITS2 and parts of TPC")
     txt.AddText("Data #gamma (LHC22f)")
     txt.Draw();
     ROOT.SetOwnership(txt,False);
@@ -93,16 +95,16 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     x0 = r * TMath.Cos(phi0)
     y0 = r * TMath.Sin(phi0)
 
-    x1 = r * TMath.Cos(phi1)
-    y1 = r * TMath.Sin(phi1)
+    # x1 = r * TMath.Cos(phi1)
+    # y1 = r * TMath.Sin(phi1)
 
-    x2 = r * TMath.Cos(phi2)
-    y2 = r * TMath.Sin(phi2)
+    # x2 = r * TMath.Cos(phi2)
+    # y2 = r * TMath.Sin(phi2)
 
-    x3 = r * TMath.Cos(phi3)
+    # x3 = r * TMath.Cos(phi3)
     y3 = r * TMath.Sin(phi3)
 
-    for i in range(4):
+    for i in range(1):
         x = vars()['x{}'.format(i)]
         y = vars()['y{}'.format(i)]
         radius = (58-42)/2

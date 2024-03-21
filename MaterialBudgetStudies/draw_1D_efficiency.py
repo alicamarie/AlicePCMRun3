@@ -30,6 +30,41 @@ class draw_1D_efficiency:
     def __init__(self):
         print("default constructor is called");
     def __init__(self, filename_data, filename_mc, cutname, folder, period, suffix):
+        # self.rootfile_data = TFile.Open(filename_data, "READ");
+        # self.rootfile_mc   = TFile.Open(filename_mc  , "READ");
+
+        # self.rootdir_mc_gen  = self.rootfile_mc.Get("pcm-qc-mc")
+        # self.list_gen        = self.rootdir_mc_gen.Get("Generated");
+        # self.list_ev_mc_gen     = self.rootdir_mc_gen.Get("Event");
+        # # self.list_ev_mc_gen  = self.list_ev_gen.FindObject("PCMPCM");
+        # self.rootdir_mc_rec  = self.rootfile_mc.Get("material-budget-mc");
+        # self.list_v0_mc_rec  = self.rootdir_mc_rec.Get("V0");
+        # self.list_ev_rec     = self.rootdir_mc_rec.Get("Event")
+        # self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMPCM");
+        # self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
+
+        # self.h1nch_mc_gen    = self.list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
+        # self.nev_gen         = self.h1nch_mc_gen.GetEntries();
+        # self.nch_gen         = self.h1nch_mc_gen.GetMean();
+
+        # self.h1nch_mc_rec    = self.list_ev_mc_rec.FindObject("hMultNTracksPV");
+        # self.nch_rec         = self.h1nch_mc_rec.GetMean();
+        # self.nev_rec         = self.h1nch_mc_rec.GetEntries();
+    
+        # self.rootdir_data    = self.rootfile_data.Get("material-budget");
+        # self.list_v0_data    = self.rootdir_data.Get("V0");
+        # self.list_ev_data_1  = self.rootdir_data.Get("Event");
+        # self.list_ev_data    = self.list_ev_data_1.FindObject("PCMDalitzEE");
+        # self.list_cut_data   = self.list_v0_data.FindObject(cutname);
+
+        # self.h1nch_data      = self.list_ev_data.FindObject("hMultNTracksPV");
+        # self.nev_data        = self.h1nch_data.GetEntries();
+        # self.nch_data        = self.h1nch_data.GetMean();
+    
+        # self.cutname = cutname;
+        # self.folder = folder;
+        # self.period = period;
+        # self.suffix = suffix;
 
         self.cutname = cutname;
         self.folder = folder;
@@ -49,16 +84,21 @@ class draw_1D_efficiency:
         self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMDalitzEE");
         self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
 
+
         self.rootdir_mc_pcmqc    = self.rootfile_mc.Get("pcm-qc-mc");
         self.list_gen_pcmqc        = self.rootdir_mc_pcmqc.Get("Generated");
         self.list_ev_mc_pcm  = self.rootdir_mc_pcmqc.Get("Event");
         self.h1nch_mc_gen    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV").Clone("h1mult");
         self.nev_gen         = self.h1nch_mc_gen.GetEntries();
         self.nch_gen         = self.h1nch_mc_gen.GetMean();
+        # print("nev_gen  = {0:e}".format(self.nev_gen));
+        # print("nch_gen  = {0:e}".format(self.nch_gen));  
 
         self.h1nch_mc_rec    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV");
         self.nch_rec         = self.h1nch_mc_rec.GetMean();
         self.nev_rec         = self.h1nch_mc_rec.GetEntries();
+        # print("nev_rec  = {0:e}".format(self.nev_rec));
+        # print("nch_rec  = {0:e}".format(self.nch_rec));
     
         self.rootdir_data    = self.rootfile_data.Get("material-budget");
         self.list_v0_data    = self.rootdir_data.Get("V0");
@@ -70,7 +110,15 @@ class draw_1D_efficiency:
         self.h1nch_data      = self.list_ev_data_pcm.FindObject("hMultNTracksPV");
         self.nev_data        = self.h1nch_data.GetEntries();
         self.nch_data        = self.h1nch_data.GetMean();
+        # print("nev_data = {0:e}".format(self.nev_data));
+        # print("nch_data = {0:e}".format(self.nch_data)); 
+    
+        # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
+        # self.period_data = period_data;
+        # self.period_mc = period_mc
         self.suffix = suffix;
+        # with open(config, "r", encoding="utf-8") as config_yml:
+        #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
         # self.config = config
@@ -92,9 +140,12 @@ class draw_1D_efficiency:
         h1_mc_rec.SetDirectory(0);
         ROOT.SetOwnership(h1_mc_rec, False);
         h1_mc_rec.Sumw2();
+        #h1_mc_rec.RebinX(2);
         h1_mc_rec.Scale(1,"width");
+        #h1_mc_rec.Scale(1/dr);
         h1_mc_rec.Scale(1/self.nev_rec);
         h1_mc_rec.Scale(1/self.nch_rec);#nch
+        #h1_mc_rec.GetXaxis().SetRangeUser(0.,180.)
         make_common_style(h1_mc_rec, 20, 1.0, kRed+1, 1, 0)
 
         h2_mc_gen = self.list_gen_pcmqc.FindObject("hPhotonRZ");
@@ -112,8 +163,11 @@ class draw_1D_efficiency:
         qc_mc_rec = mc_rec_list.FindObject("qc")
         h2_mc_rec_to_MC = qc_mc_rec.FindObject("hRZ_Photon_Primary_MC")
         h1_mc_rec_to_MC = h2_mc_rec_to_MC.ProjectionY("h1_mc_recMC");
+        # print("BINS", h2_mc_rec_to_MC.GetAxis(0).GetNbins())
         print("BINS", h1_mc_rec_to_MC.GetXaxis().GetNbins())
 
+        # h1_mc_gen.GetXaxis().SetRangeUser(0., 90.)
+        #h1_mc_gen.RebinX(10);
         h1_mc_rec_to_MC.Scale(1,"width");
         h1_mc_rec_to_MC.Scale(1/self.nev_rec);
         h1_mc_rec_to_MC.Scale(1/self.nch_rec);
@@ -149,10 +203,13 @@ class draw_1D_efficiency:
         outfile.WriteTObject(outlist);
         outlist.Clear();
 
+
         hs_data = self.list_cut_data.FindObject("hs_conv_point").Clone("hs_data");
         h1_data = hs_data.Projection(1 ,"");
         h1_data.SetDirectory(0);
         ROOT.SetOwnership(h1_data, False);
+        # h1_data.Sumw2();
+        #h1_data.RebinX(1);
         h1_data.Scale(1,"width");
         h1_data.Scale(1/self.nev_data);
         h1_data.Scale(1/self.nch_data);
@@ -178,6 +235,7 @@ class draw_1D_efficiency:
         h1_mc_rec.Draw("E0h,same");
         h1_data.Draw("E0h,same");
         h1_mc_rec_to_MC.Draw("E0h,same");
+        # h1amplitude.Draw("E0h,same")
 
         if cuts == True:
             line2 = TLine(42,1e-9,42,1e-1);
@@ -238,6 +296,7 @@ class draw_1D_efficiency:
         leg.AddEntry(h1_mc_rec ,"M.C. rec. primary #gamma (LHC23d1k)","LP");
         leg.AddEntry(h1_mc_rec_to_MC, "M.C. rec. (MCTruth conversion point)", "LP")
         leg.AddEntry(h1_data   ,"Data #gamma candidates (LHC22f pass4)","LP");
+        #leg.AddEntry(h1amplitude, "new histo with 90 instead of 100 bins to divide", "LP")
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
@@ -319,6 +378,15 @@ class draw_1D_efficiency:
         h1ratio.SetDirectory(0);
         ROOT.SetOwnership(h1ratio,False);
 
+        # h1ratio1 = h1amplitude.Clone("h1ratio1");
+        # make_common_style(h1ratio1, 20, 1.0, kGreen+2, 1, 0);
+        # h1ratio1.Reset();
+        # h1ratio1.Sumw2();
+        # h1ratio1.Divide(h1recToMC,h1amplitude, 1., 1., "G");
+        # h1ratio1.Draw("E0h,same");
+        # h1ratio1.SetDirectory(0);
+        # ROOT.SetOwnership(h1ratio1,False);
+
         h1ratio1 = h1_mc_gen.Clone("h1ratio1");
         make_common_style(h1ratio1, 20, 1.0, kGreen+2, 1, 0);
         h1ratio1.Reset();
@@ -334,6 +402,7 @@ class draw_1D_efficiency:
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
+        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -352,6 +421,9 @@ class draw_1D_efficiency:
             self.suffix = self.suffix.replace("_with_cuts", "");
         if generated == True:
             self.suffix = self.suffix.replace("_with_generated", "");
+    #_____________________________________________________________________
+    # add generated when available! right now still missing
+
 
     #_____________________________________________________________________
     
@@ -361,6 +433,10 @@ if __name__ == "__main__":
     period_data = "LHC22f"
     suffix = "AnyTrack";
     filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
+    # # filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
+    # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
+    # # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
+
     filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155756_LHC22f_pass4.root"
     config_file = "/Users/alicamarieenderich/202312_material_budget_code/config_pp_13.6TeV_LHC22f_material.yml"
     with open(config_file, "r", encoding="utf-8") as config_yml:

@@ -103,7 +103,7 @@ def plotting_Rxy(histogram, xtitle, ytitle, log , mctype, suffix, circle, outnam
     txt.Draw();
     ROOT.SetOwnership(txt,False);
 
-    ALICEtext2D("thesis")
+    ALICEtext2D("simulation")
 
     if circle == "circle":
 

@@ -36,6 +36,8 @@ class draw_1D_sliced_pt:
         self.period_data = period_data;
         self.period_mc = period_mc
         self.suffix = suffix;
+        # with open(config, "r", encoding="utf-8") as config_yml:
+        #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
         self.config = config
@@ -94,6 +96,68 @@ class draw_1D_sliced_pt:
         folder = "/Users/alicamarieenderich/this_thesis_material_budget_plots/"
         os.makedirs(folder, exist_ok=True);
 
+        # with open(os.path.join(folder, 'this_thesis_ngamma_values_for_pt_cuts_{0}.txt'.format(type)), 'w') as file:
+        #     for i in [0.05, 0.1, 0.2]:
+        #         file.write("pT cut: {} \n".format(i))
+        #     #second, rxy loop
+        #         for ir in range(0, len(arr_rxy)-1):
+        #             r1 = arr_rxy[ir];
+        #             r2 = arr_rxy[ir+1];
+        #             dr = r2 - r1;
+        #             ptmax = h2rpt.GetXaxis().GetNbins()
+        #             pt_bin_cut = h2rpt.GetXaxis().FindBin(5. -1e-6); # cut because of different bin widths not the pt threshold!!!
+        #             h2rpt.GetXaxis().SetRange(0, pt_bin_cut)
+        #             bin_r1 = h2rpt.GetYaxis().FindBin(r1 + 1e-6);
+        #             bin_r2 = h2rpt.GetYaxis().FindBin(r2 - 1e-6);
+
+        #             h1pt = h2rpt.ProjectionX("h1pt0_r{0:d}".format(ir), bin_r1, bin_r2, "");
+        #             h1pt.SetTitle("transverse impulse #it{{p}}_{{T}} in {0:3.2f} < #it{{#varphi}} < {1:3.2f} , {2:3.2f} < #it{{r}}_{{xy}} < {3:3.2f} cm".format(phi1, phi2, r1, r2));
+        #             h1pt.SetXTitle("#it{p}_{T} (GeV/c)");
+        #             h1pt.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{3}N_{#gamma}}{dr_{xy} d#it{p}_{T} d#varphi} (cm #upoint rad.)^{-1}");
+        #             h1pt.Scale(1, "width")
+        #             pt_bin_cut_plus = h2rpt.GetXaxis().FindBin(5. +1e-6);
+        #             h2rpt.GetXaxis().SetRange(0,ptmax)
+
+        #             h2rpt.GetXaxis().SetRange(pt_bin_cut_plus, ptmax+1)
+        #             bin_r1 = h2rpt.GetYaxis().FindBin(r1 + 1e-6);
+        #             bin_r2 = h2rpt.GetYaxis().FindBin(r2 - 1e-6);
+        #             print("integrate over", r1 , r2, "cm", bin_r1, bin_r2);
+
+        #             h1pt1 = h2rpt.ProjectionX("h1pt1_r{0:d}".format(ir), bin_r1, bin_r2, "");
+        #             h1pt1.SetTitle("transverse impulse #it{{p}}_{{T}} in {0:3.2f} < #it{{#varphi}} < {1:3.2f} , {2:3.2f} < #it{{r}}_{{xy}} < {3:3.2f} cm".format(phi1, phi2, r1, r2));
+        #             h1pt1.SetXTitle("#it{p}_{T} (GeV/c)");
+        #             h1pt1.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{3}N_{#gamma}}{dr_{xy} d#it{p}_{T} d#varphi} (cm #upoint rad.)^{-1}");
+        #             h1pt1.Scale(1, "width")
+        #             outlist.Add(h1pt);
+        #             outlist.Add(h1pt1)
+                    
+        #             h2rpt.GetXaxis().SetRange(0,ptmax+1)
+        #             h1ptint = h2rpt.ProjectionX("h1pt0_r{0:d}".format(ir), bin_r1, bin_r2, "");
+        #             bin_cut_int = h1ptint.FindBin(i)
+        #             bin_end_int = h1ptint.GetNbinsX()
+        #             ngamma_int = h1ptint.Integral(bin_cut_int, bin_end_int+1,"")
+        #             print("NGAMMAINT:", ngamma_int)
+        #             bin_start = h1pt.FindBin(i)
+        #             bin_end = h1pt.GetNbinsX()
+        #             ngamma = h1pt.Integral(bin_start, bin_end+1,"") + h1pt1.Integral("")
+
+        #             if type =="data":
+        #                 h2rpt.GetXaxis().SetRange(0,ptmax)
+        #                 bin_pt_end = h2rpt.GetXaxis().GetNbins()
+        #                 bin_pt_cut= h2rpt.GetXaxis().FindBin(i);
+        #                 ngamma2_err = c_double(0.0)
+        #                 ngamma2 = h2rpt.IntegralAndError(bin_pt_cut, bin_pt_end+1,bin_r1, bin_r2,  ngamma2_err, "")
+        #                 print("NGAMMA2D", ngamma2, "+/-", ngamma2_err.value)
+
+        #             print("integral:", i, ir, "0 to 5 GeV:",h1pt.Integral(bin_start, bin_end+1,"width"), ">= 5 GeV:", h1pt1.Integral("width") , "ngamma:", ngamma )
+
+        #             # file.write("radial interval: {0}; {1} < r < {2}; pt_cut: {3}; ngamma: {4}\n".format(ir, r1, r2, i, ngamma))
+        #             file.write("radial interval: {0}; {1} < r < {2}; in bins: {3} to {4}; bin pt_cut: {5} bin pt_end: {6} ; ngamma: {7}; cut for diff. widths: left:{8}, right:{9}, total end: {10}\n".format(ir, r1, r2, bin_r1, bin_r2, bin_start,bin_end+1, ngamma, pt_bin_cut, pt_bin_cut_plus, ptmax+1))
+        #             if type =="data":
+        #                 file.write("radial interval: {0}; {1} < r < {2}; in bins: {3} to {4}; bin pt_cut: {5} bin pt_end: {6} ; ngamma: {7}\n".format(ir, r1, r2, bin_r1, bin_r2, bin_pt_cut,bin_end+1, ngamma2))
+
+        #         file.write("\n\n")
+
         #second, rxy loop
         for ir in range(0, len(arr_rxy)-1):
             r1 = arr_rxy[ir];
@@ -109,6 +173,7 @@ class draw_1D_sliced_pt:
             h1pt.SetTitle("transverse impulse #it{{p}}_{{T}} in {0:3.2f} < #it{{#varphi}} < {1:3.2f} , {2:3.2f} < #it{{r}}_{{xy}} < {3:3.2f} cm".format(phi1, phi2, r1, r2));
             h1pt.SetXTitle("#it{p}_{T}");
             h1pt.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{3}N_{#gamma}}{dr_{xy} d#it{p}_{T} d#varphi} (cm #upoint rad.)^{-1}");
+            # h1pt.Scale(dr);
             h1pt.Scale(1, "width")
             pt_bin_cut_plus = h2rpt.GetXaxis().FindBin(5. +1e-6);
             h2rpt.GetXaxis().SetRange(0,ptmax)
@@ -121,6 +186,7 @@ class draw_1D_sliced_pt:
             h1pt1.SetTitle("transverse impulse #it{{p}}_{{T}} in {0:3.2f} < #it{{#varphi}} < {1:3.2f} , {2:3.2f} < #it{{r}}_{{xy}} < {3:3.2f} cm".format(phi1, phi2, r1, r2));
             h1pt1.SetXTitle("#it{p}_{T}");
             h1pt1.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{3}N_{#gamma}}{dr_{xy} d#it{p}_{T} d#varphi} (cm #upoint rad.)^{-1}");
+            # h1pt1.Scale(dr);
             h1pt1.Scale(1, "width")
             outlist.Add(h1pt);
             outlist.Add(h1pt1)
@@ -140,7 +206,16 @@ class draw_1D_sliced_pt:
         rootdire = rootfile.Get(taskname); 
         list_v0 = rootdire.Get("V0");
         list_ev     = rootdire_pcm.Get("Event");
+        #list_ev = list_ev_1.FindObject("PCMPCM");
+        # if type == "mc":
+        #    list_ev = list_ev_1#.FindObject("PCMPCM");
+        # if type == "data":
+        #    list_ev = list_ev_1#.FindObject("PCMDalitzEE");
 
+        # pcmname = "pcm-qc";
+        # if type == "mc":
+        #     pcmname = "pcm-qc-mc";
+        # rootdire_pcm = rootfile.Get(pcmname); 
         outname = os.path.join(self.folder, "{0}_material_budget_dPt_{1}_{2}_{3}TeV_{4}{5}.root".format(date, type, self.config["common"]["system"], self.config["common"]["energy"], self.config["common"]["period"], self.suffix));
         outfile = TFile(outname, "RECREATE");
 
@@ -188,6 +263,7 @@ class draw_1D_sliced_pt:
         #style   
             make_common_style(h1data_0, 20, 0.6, kRed+1, 1, 0);
             make_common_style(h1mc_0  , 24, 0.6, kRed+1, 1, 0);
+            #h1mc_complete.SetLineStyle(2);
             ROOT.SetOwnership(h1data_0, False);
             ROOT.SetOwnership(h1mc_0, False);
 
@@ -204,6 +280,7 @@ class draw_1D_sliced_pt:
         #style   
             make_common_style(h1data_1, 20, 0.6, kRed+1, 1, 0);
             make_common_style(h1mc_1  , 24, 0.6, kRed+1, 1, 0);
+            #h1mc_complete.SetLineStyle(2);
             ROOT.SetOwnership(h1data_1, False);
             ROOT.SetOwnership(h1mc_1, False);
         
@@ -238,6 +315,7 @@ class draw_1D_sliced_pt:
             for j in range(2):
                 make_common_style(data_list[i][j], 20, 0.6, color[i], 1, 0);
                 make_common_style(mc_list[i][j]  , 25, 0.6, color[i], 1, 0);
+                #mc_list[i].SetLineStyle(2);
                 data_list[i][j].Draw("E0same");
                 mc_list[i][j].Draw("E0same");
 
@@ -378,7 +456,16 @@ class draw_1D_sliced_pt:
         frame1 = p1.DrawFrame(0., ymin, 10., ymax); #(0., 1e-20, 10., 1e-1);#
         frame1.GetXaxis().SetTitle("transverse impulse #it{p}_{T} (GeV/c)");
         frame1.GetYaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d#it{N}_{#gamma}}{d#it{p_{T}}} (GeV/c)^{#minus1}");
-
+        # frame1.GetXaxis().SetTitleSize(0.045);
+        # frame1.GetYaxis().SetTitleSize(0.045);
+        # frame1.GetXaxis().SetTitleOffset(1.0);
+        # frame1.GetYaxis().SetTitleOffset(1.52);
+        # frame1.GetXaxis().SetLabelSize(0.045);
+        # frame1.GetYaxis().SetLabelSize(0.045);
+        # frame1.GetYaxis().SetMaxDigits(3);
+        # frame1.GetXaxis().SetLabelOffset(0.01);
+        # frame1.GetYaxis().SetLabelOffset(0.01);
+        # ROOT.SetOwnership(frame1,False);
         FrameSettings(frame1)
 
         h1mc_complete.Draw("E0Hsame");
@@ -395,6 +482,17 @@ class draw_1D_sliced_pt:
         txt.Draw();
         ROOT.SetOwnership(txt,False);
 
+        # txt = TPaveText(0.90,0.77,0.95,0.82,"NDC");
+        # txt.SetFillColor(kWhite);
+        # txt.SetFillStyle(0);
+        # txt.SetBorderSize(0);
+        # txt.SetTextAlign(32);#middle,left
+        # txt.SetTextFont(42);#helvetica
+        # txt.SetTextSize(0.02);
+        # txt.AddText("ALICE this thesis");
+        # txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
+        # txt.Draw();
+        # ROOT.SetOwnership(txt,False);
         ALICEtext("thesis")
 
         leg = TLegend(0.17,0.72,0.35,0.82);
@@ -418,7 +516,17 @@ class draw_1D_sliced_pt:
         frame2 = p2.DrawFrame(0.,cut_in_ratio,10.,2.);
         frame2.GetXaxis().SetTitle("#it{p}_{T} (GeV/c)");
         frame2.GetYaxis().SetTitle("#frac{Data}{M.C.}");
-
+        # frame2.GetXaxis().SetTitleSize(0.10);
+        # frame2.GetYaxis().SetTitleSize(0.10);
+        # frame2.GetXaxis().SetTitleOffset(1.0);
+        # frame2.GetYaxis().SetTitleOffset(0.7);
+        # frame2.GetXaxis().SetLabelSize(0.10);
+        # frame2.GetYaxis().SetLabelSize(0.10);
+        # frame2.GetYaxis().CenterTitle(True);
+        # frame2.GetXaxis().SetLabelOffset(0.01);
+        # frame2.GetYaxis().SetLabelOffset(0.01);
+        # frame2.GetYaxis().SetNdivisions(5, 5, 0, kTRUE)
+        # ROOT.SetOwnership(frame2,False);
         FrameSettingsRatio(frame2)
 
         h1ratio = h1data_complete.Clone("h1ratio");

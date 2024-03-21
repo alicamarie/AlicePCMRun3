@@ -219,7 +219,7 @@ def run(filename, config, type, suffix, folder):
 # period = "LHC22f"
 # filename = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124838_LHC22f_pass4.root"
 # type = "data"
-# config_file = "/Users/alicamarieenderich/202312_invariant_mass/invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml"
+# config_file = "configs/config_pp_13.6TeV_pi0_LHC22f.yml" #"/Users/alicamarieenderich/202312_invariant_mass/invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml"
 
 # period = "LHC22o_small"
 # filename = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_129486_LHC22o_pass4_small.root"
@@ -241,10 +241,10 @@ def run(filename, config, type, suffix, folder):
 # cutname = "qc"
 # suffix = "AnyTrack";
 
-# # config_file = "/Users/alicamarieenderich/202312_invariant_mass/invariant_mass_code/configs/config_pp_13.6TeV_pi0.yml"
+# config_file = "/Users/alicamarieenderich/202312_invariant_mass/invariant_mass_code/configs/config_pp_13.6TeV_pi0.yml"
 # with open(config_file, "r", encoding="utf-8") as config_yml:
 #     config = yaml.safe_load(config_yml)
-# date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
+# date = datetime.date.today().strftime("%Y%m%d"); #"this_thesis" #
 # folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots_new_config/".format(date, period);  
 # os.makedirs(folder, exist_ok=True);
 

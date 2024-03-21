@@ -295,7 +295,7 @@ def run(filename_data, filename_mc,config,type,folder, period_str):
                             list_parameters_comparison.append(parameter_comparison);
             return list_parameters_comparison, yield_list     
     list_parameters_data, yield_list_data = loop_data(rootfile_data)
-    list_parameters_mc, yield_list_mc = loop_mc(rootfile_mc)
+    # list_parameters_mc, yield_list_mc = loop_mc(rootfile_mc)
 
     for i in range(len(list_parameters_data)):
         for j in range(len(list_parameters_data[1])):

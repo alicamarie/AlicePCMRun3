@@ -51,7 +51,7 @@ def draw_comparison_parameters(list_data0, index, fit_variable, date, period_str
             p1.SetLogy()
 
         frame1 = p1.DrawFrame(0, -2., 0.3, 1.2*yMax);
-        frame1.GetXaxis().SetTitle("#it{p}_{T} (GeV/c)");
+        frame1.GetXaxis().SetTitle("#it{M}_{#gamma#gamma} (GeV/#it{c}^{2})"); 
         frame1.GetYaxis().SetTitle("Counts");
         frame1.GetXaxis().SetTitleSize(0.045);
         frame1.GetYaxis().SetTitleSize(0.045);
@@ -232,3 +232,5 @@ if __name__ == "__main__":
     filename_data0 = "/Users/alicamarieenderich/this_thesis_LHC22f_invariant_mass_plots/this_thesis_LHC22f_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
     filename_data1 = "/Users/alicamarieenderich/this_thesis_LHC23zc_invariant_mass_plots/this_thesis_LHC23zc_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
     filename_data2 = "/Users/alicamarieenderich/this_thesis_LHC22o_minBias_invariant_mass_plots/this_thesis_LHC22o_minBias_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+
+    run(filename_data0, config, type, folder, period_str)
