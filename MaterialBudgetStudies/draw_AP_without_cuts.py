@@ -30,11 +30,8 @@ def draw_AP_without_cuts(filename_data, cutname, suffix, folder, date):
     rootfile_data = TFile.Open(filename_data, "READ");
     rootdir_data = rootfile_data.Get("v0-selector");
 
-
     h2_data = rootdir_data.Get("hV0APplot");
     h2_data.Sumw2();
-    #h2_data.RebinX(5);
-    # h2_data.SetZTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} N_{#gamma} ");
     h2_data.SetXTitle("#it{#alpha} = (p_{L}^{-}-p_{L}^{+})/(p_{L}^{-}+p_{L}^{+})")
     h2_data.GetZaxis().SetTitleOffset(1.9);
     h2_data.SetDirectory(0);
@@ -42,38 +39,21 @@ def draw_AP_without_cuts(filename_data, cutname, suffix, folder, date):
     h2_data.GetYaxis().SetRangeUser(-100,100);
     ROOT.SetOwnership(h2_data, False);
 
-# #   hGammaRxy.Scale(1/dr);
-#     h2_data.Scale(1/nev_data);
-#     h2_data.Scale(1/nch_data);
-
     c1 = TCanvas("c0","c0",0,0,800,800);
     c1.Divide(1,2,1e-5,1e-5); 
     c1.SetMargin(0.13,0.13,0.13,0.13);
     c1.SetTicks(1,1);
 
     frame1 = c1.DrawFrame(-1, 0, 1, 0.25);
-    # frame1.GetXaxis().SetTitle("blabal")#"#it{#alpha} = (p_{L}^{-}-p_{L}^{+})#(p_{L}^{-}+p_{L}^{+})");
-    # frame1.GetYaxis().SetTitle("#it{q}_{T} (GeV/c) ");
     FrameSettings2D(frame1)
 
     gPad.SetLogz()
     h2_data.Draw("COLZ");
 
-    # txt = TPaveText(0.0,0.95,1.0,0.92,"NDC");
-    # txt.SetFillColor(kWhite);
-    # txt.SetFillStyle(0);
-    # txt.SetBorderSize(0);
-    # txt.SetTextAlign(22);#centered,left
-    # txt.SetTextFont(42);#helvetica
-    # txt.SetTextSize(0.05);
-    # txt.AddText("Amenteros-Podolanski distribtuion for data (LHC22f) after cuts")
-    # txt.Draw();
-    # ROOT.SetOwnership(txt,False);
     txt = TPaveText(0.52,0.77,0.78,0.85,"NDC");
     txt.SetFillColor(kWhite);
     txt.SetFillStyle(1001);
     txt.SetBorderSize(0);
-    # txt.SetTextColor(kRed)
     txt.SetTextAlign(32);#middle,left
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.03);

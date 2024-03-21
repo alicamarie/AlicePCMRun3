@@ -26,14 +26,9 @@ period_mc = "LHC23d1k";
 period_data = "LHC22f"
 suffix = "AnyTrack";
 filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
-# # filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
-# filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
-# # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
-
 filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155756_LHC22f_pass4.root"
-# filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147812_LHC23d1k.root"
 
-config_file = "/Users/alicamarieenderich/202312_material_budget_code/config_pp_13.6TeV_LHC22f_material.yml"
+config_file = "MaterialBudgetStudies/config_pp_13.6TeV_LHC22f_material.yml"
 with open(config_file, "r", encoding="utf-8") as config_yml:
     config = yaml.safe_load(config_yml)
 date = "this_thesis"# datetime.date.today().strftime("%Y%m%d");
@@ -92,10 +87,7 @@ filename_mc_pt = os.path.join(folder, "{0}_material_budget_dPt_mc_{1}_{2}TeV_{3}
 filename_data_pt = os.path.join(folder, "{0}_material_budget_dPt_data_{1}_{2}TeV_{3}{4}.root".format(date, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix));
 
 draw_sliced = draw_1D_sliced_pt(config, suffix, folder, period_data, period_mc, cutname);
-#for eta in range(6): #6
-# for r in range(6): #6
 draw_sliced.draw_material_pt_combined(filename_data_pt, filename_mc_pt, 1, cutname, date);
-# for eta in range(6): #6
 for r in range(6): #6
     draw_sliced.draw_material_pt(filename_data_pt, filename_mc_pt, r, cutname, date);
 
@@ -133,7 +125,7 @@ draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, date);
 print("draw_hPhotonRxy_data done")
 outname         = os.path.join(folder,"{0}_PhotonPhivsRxy.root".format(date));
 outfile         = TFile(outname, "RECREATE");
-# draw_hPhotonRxy_vs_Phi_mc_gen(suffix, "log", outfile, "gen", folder, date);
+draw_hPhotonRxy_vs_Phi_mc_gen(suffix, "log", outfile, "gen", folder, date);
 print("draw_hPhotonRxy_vs_Phi_mc_gen done")
 draw_hPhotonRxy_vs_Phi_mc_rec(suffix, "log", outfile, "rec", folder, date); 
 draw_material_RZ(filename_data, filename_mc, suffix, 40, "wire", False, folder, date);

@@ -62,6 +62,7 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
     else:
         h2rz.GetYaxis().SetRangeUser(0,cut);
     h2rz.GetXaxis().SetRangeUser(-1.*cut,cut)
+    h2rz.GetZaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #it{N}_{#gamma} ")
     h2rz.GetZaxis().SetTitleOffset(1.9);
 #style   
     make_common_style(h2rz, 20, 1.0, kBlue+1, 1, 0);

@@ -25,7 +25,6 @@ def make_common_style(g1,marker,size,color,width=1,fill=0):
     g1.SetFillColor(color);
     g1.SetFillStyle(fill);
 
-
 def find_phi_for_eta(hist, eta_value, output_file):
     eta_bin = hist.GetYaxis().FindBin(eta_value)
     x_bins = hist.GetNbinsX()
@@ -45,7 +44,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     rootfile_data = TFile.Open(filename_data, "READ");
     rootfile_mc   = TFile.Open(filename_mc  , "READ");
 
-
     list_data = rootfile_data.Get(cutname);
     list_mc = rootfile_mc.Get(cutname);
 
@@ -55,10 +53,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     h2mc_complete = list_mc.FindObject("h2etaphi_r{0:d}".format(rid));
     h2data_complete.SetDirectory(0);
     h2mc_complete.SetDirectory(0);
- 
-#normalization
-   #h2data_complete.Sumw2()
-    #h2mc_complete.Sumw2()  
 
 #style   
     make_common_style(h2data_complete, 20, 1.0, kBlue+1, 1, 0);
@@ -71,7 +65,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     c1.Divide(1,2,1e-5,1e-5); 
 
     p1 = c1.cd(1);
-    #p1.SetPad(0,0.35,1,1);
     p1.SetMargin(0.1,0.13,0.13,0.2);
     p1.SetTicks(1,1);
 
@@ -144,7 +137,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
-    # date = datetime.date.today().strftime("%Y%m%d");
 
     if log == "log":
         outname = os.path.join(folder, "{0}_pp_13.6TeV_{1}_material_budget_eta_vs_phi_r{2}_log_{3}_{4}.png".format(date, period, rid, cutname, suffix))
