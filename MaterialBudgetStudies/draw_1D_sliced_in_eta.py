@@ -121,18 +121,6 @@ class draw_1D_sliced_eta:
         rootdire = rootfile.Get(taskname); 
         list_v0 = rootdire.Get("V0");
         list_ev     = rootdire_pcm.Get("Event");
-        #list_ev = list_ev_1.FindObject("PCMPCM");
-        # if type == "mc":
-        #    list_ev = list_ev_1#.FindObject("PCMPCM");
-        # if type == "data":
-        #    list_ev = list_ev_1#.FindObject("PCMDalitzEE");
-
-        # pcmname = "pcm-qc";
-        # if type == "mc":
-        #     pcmname = "pcm-qc-mc";
-        # rootdire_pcm = rootfile.Get(pcmname); 
-
-        # date = datetime.date.today().strftime("%Y%m%d");
         outname = os.path.join(self.folder, "{0}_material_budget_dEta_{1}_{2}_{3}TeV_{4}{5}.root".format(date, type, self.config["common"]["system"], self.config["common"]["energy"], self.config["common"]["period"], self.suffix));
         print("out file name = ", outname);
         outfile = TFile(outname, "RECREATE");
@@ -160,10 +148,6 @@ class draw_1D_sliced_eta:
 
         list_data = rootfile_data.Get(cutname);
         list_mc = rootfile_mc.Get(cutname);
-        # list_data.ls();
-        # list_mc.ls();
-        # print(filename_data, filename_mc, self.cutname, rid, self.period_data, self.period_mc, self.suffix)
-
         r_bins = [0, 14, 30, 42, 58, 69, 90, 180]
         h1data_complete = list_data.FindObject("h1eta_phi_r{0:d}".format(rid));
         h1mc_complete = list_mc.FindObject("h1eta_phi_r{0:d}".format(rid));
@@ -265,48 +249,12 @@ class draw_1D_sliced_eta:
 
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "ratio \pm 5%", "LP")
-        #if generated == True:
-         #   leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
         filepath = os.path.join(self.folder, "{0}_material_budget_vs_eta_r{1}_{2}.pdf".format(date, rid, self.suffix));    
         c1.SaveAs(filepath);
-
-# #________________________________________________
-# if __name__:
-#     cuts = True
-#     generated = True
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     config = "/Users/alicamarieenderich/material_budget_FSP_update/config_pp_13.6TeV_LHC22f_material.yml"
-#     date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-#     for type in ["data", "mc"]:
-#         if type == "data": 
-#             file = filename_data
-#         elif type == "mc":
-#             file = filename_mc;
-#         draw_sliced = draw_1D_sliced_eta(config, suffix, folder, period_data, period_mc, cutname);
-#         draw_sliced.run(file, type);
-    
-#     filename_mc = "/Users/alicamarieenderich/20231014_material_budget_plots/20231014_material_budget_dEta_mc_pp_13.6TeV_LHC22fAnyTrack.root"
-#     filename_data = "/Users/alicamarieenderich/20231014_material_budget_plots/20231014_material_budget_dEta_data_pp_13.6TeV_LHC22fAnyTrack.root"
-   
-#     draw_sliced = draw_1D_sliced_eta(config, suffix, folder, period_data, period_mc, cutname);
-#     for eta in range(6):
-#         for r in range(6):
-#             print(eta,r);
-#             draw_sliced.draw_material_eta(filename_data, filename_mc, r);

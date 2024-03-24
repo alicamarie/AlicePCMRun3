@@ -34,113 +34,9 @@ class calc_omega_wire:
     def __init__(self):
         print("default constructor is called");
     def __init__(self, config, filename_data, filename_mc, cutname, folder, period_data, period_mc, suffix):
-        #print("filename_data = {0} , filename_mc = {1} , cutname = {2}".format(filename_data, filename_mc, cutname));
-        # self.rootfile_data = TFile.Open(filename_data, "READ");
-        # self.rootfile_mc   = TFile.Open(filename_mc  , "READ");
-
-        # self.rootdir_mc_gen  = self.rootfile_mc.Get("material-budget-mc")
-        # self.list_gen        = self.rootdir_mc_gen.Get("Generated");
-        # self.list_ev_gen     = self.rootdir_mc_gen.Get("Event");
-        # self.list_ev_mc_gen  = self.list_ev_gen.FindObject("PCMDalitzEE");
-        # self.rootdir_mc_rec  = self.rootfile_mc.Get("material-budget-mc");
-        # self.list_v0_mc_rec  = self.rootdir_mc_rec.Get("V0");
-        # self.list_ev_rec     = self.rootdir_mc_rec.Get("Event")
-        # self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMDalitzEE");
-        # self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
-
-        # self.h1nch_mc_gen    = self.list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
-        # self.nev_gen         = self.h1nch_mc_gen.GetEntries();
-        # self.nch_gen         = self.h1nch_mc_gen.GetMean();
-        # # print("nev_gen  = {0:e}".format(self.nev_gen));
-        # # print("nch_gen  = {0:e}".format(self.nch_gen));  
-
-        # self.h1nch_mc_rec    = self.list_ev_mc_rec.FindObject("hMultNTracksPV");
-        # self.nch_rec         = self.h1nch_mc_rec.GetMean();
-        # self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-        # # print("nev_rec  = {0:e}".format(self.nev_rec));
-        # # print("nch_rec  = {0:e}".format(self.nch_rec));
-    
-        # self.rootdir_data    = self.rootfile_data.Get("material-budget");
-        # self.list_v0_data    = self.rootdir_data.Get("V0");
-        # self.list_ev_data_1  = self.rootdir_data.Get("Event");
-        # self.list_ev_data    = self.list_ev_data_1.FindObject("PCMDalitzEE");
-        # self.list_cut_data   = self.list_v0_data.FindObject(cutname);
-
-        # self.h1nch_data      = self.list_ev_data.FindObject("hMultNTracksPV");
-        # self.nev_data        = self.h1nch_data.GetEntries();
-        # self.nch_data        = self.h1nch_data.GetMean();
-        # # print("nev_data = {0:e}".format(self.nev_data));
-        # # print("nch_data = {0:e}".format(self.nch_data)); 
-    
-        # # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
-        # self.period_data = period_data;
-        # self.period_mc = period_mc
-        # self.suffix = suffix;
-        # # with open(config, "r", encoding="utf-8") as config_yml:
-        # #     self.config = yaml.safe_load(config_yml)
-        # self.folder = folder;
-        # self.cutname = cutname
-        # self.config = config
-        # self.arr_rxy = np.array([0,1,2,3,4,5], dtype=float);
-
-
-        # self.cutname = cutname;
-        # self.folder = folder;
-        # self.period = period;
-        # self.suffix = suffix;
-
-        # self.rootfile_data = TFile.Open(filename_data, "READ");
-        # self.rootfile_mc   = TFile.Open(filename_mc  , "READ");
-
-        # self.rootdir_mc_gen  = self.rootfile_mc.Get("material-budget-mc")
-        # self.list_gen        = self.rootdir_mc_gen.Get("Generated");
-        # self.list_ev_gen     = self.rootdir_mc_gen.Get("Event");
-        # self.list_ev_mc_gen  = self.list_ev_gen.FindObject("PCMDalitzEE");
-        # self.rootdir_mc_rec  = self.rootfile_mc.Get("material-budget-mc");
-        # self.list_v0_mc_rec  = self.rootdir_mc_rec.Get("V0");
-        # self.list_ev_rec     = self.rootdir_mc_rec.Get("Event")
-        # self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMDalitzEE");
-        # self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
-
-        # self.h1nch_mc_gen    = self.list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
-        # self.nev_gen         = self.h1nch_mc_gen.GetEntries();
-        # self.nch_gen         = self.h1nch_mc_gen.GetMean();
-        # # print("nev_gen  = {0:e}".format(self.nev_gen));
-        # # print("nch_gen  = {0:e}".format(self.nch_gen));  
-
-        # self.h1nch_mc_rec    = self.list_ev_mc_rec.FindObject("hMultNTracksPV");
-        # self.nch_rec         = self.h1nch_mc_rec.GetMean();
-        # self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-        # # print("nev_rec  = {0:e}".format(self.nev_rec));
-        # # print("nch_rec  = {0:e}".format(self.nch_rec));
-    
-        # self.rootdir_data    = self.rootfile_data.Get("material-budget");
-        # self.list_v0_data    = self.rootdir_data.Get("V0");
-        # self.list_ev_data_1  = self.rootdir_data.Get("Event");
-        # self.list_ev_data    = self.list_ev_data_1.FindObject("PCMDalitzEE");
-        # self.list_cut_data   = self.list_v0_data.FindObject(cutname);
-        # self.rootdir_data_pcmqc    = self.rootfile_data.Get("pcm-qc");
-        # self.list_ev_data_pcm  = self.rootdir_data_pcmqc.Get("Event");
-        # self.h1nch_data      = self.list_ev_data_pcm.FindObject("hMultNTracksPV");
-        # self.nev_data        = self.h1nch_data.GetEntries();
-        # self.nch_data        = self.h1nch_data.GetMean();
-        # # print("nev_data = {0:e}".format(self.nev_data));
-        # # print("nch_data = {0:e}".format(self.nch_data)); 
-    
-        # # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
-        # # self.period_data = period_data;
-        # # self.period_mc = period_mc
-        # self.suffix = suffix;
-        # # with open(config, "r", encoding="utf-8") as config_yml:
-        # #     self.config = yaml.safe_load(config_yml)
-        # self.folder = folder;
-        # self.cutname = cutname
         self.config = config
-        # self.arr_rxy = np.array([0,1,2,3,4,5], dtype=float);
-
         self.cutname = cutname;
         self.folder = folder;
-        # self.period = period;
         self.suffix = suffix;
 
         self.rootfile_data = TFile.Open(filename_data, "READ");
@@ -162,14 +58,10 @@ class calc_omega_wire:
         self.h1nch_mc_gen    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV").Clone("h1mult");
         self.nev_gen         = self.h1nch_mc_gen.GetEntries();
         self.nch_gen         = self.h1nch_mc_gen.GetMean();
-        # print("nev_gen  = {0:e}".format(self.nev_gen));
-        # print("nch_gen  = {0:e}".format(self.nch_gen));  
 
         self.h1nch_mc_rec    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV");
         self.nch_rec         = self.h1nch_mc_rec.GetMean();
         self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-        # print("nev_rec  = {0:e}".format(self.nev_rec));
-        # print("nch_rec  = {0:e}".format(self.nch_rec));
     
         self.rootdir_data    = self.rootfile_data.Get("material-budget");
         self.list_v0_data    = self.rootdir_data.Get("V0");
@@ -181,18 +73,11 @@ class calc_omega_wire:
         self.h1nch_data      = self.list_ev_data_pcm.FindObject("hMultNTracksPV");
         self.nev_data        = self.h1nch_data.GetEntries();
         self.nch_data        = self.h1nch_data.GetMean();
-        # print("nev_data = {0:e}".format(self.nev_data));
-        # print("nch_data = {0:e}".format(self.nch_data)); 
-    
-        # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
         self.period_data = period_data;
         self.period_mc = period_mc
         self.suffix = suffix;
-        # with open(config, "r", encoding="utf-8") as config_yml:
-        #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
-        # self.config = config
         self.arr_rxy = np.array([0,1,2,3,4,5], dtype=float);
     
     def __del__(self):
@@ -218,7 +103,6 @@ class calc_omega_wire:
         h1_mc.SetDirectory(0);
         ROOT.SetOwnership(h1_mc, False);
         h1_mc.Sumw2();
-        #h1_mc_rec.RebinX(2);
         h1_mc.Scale(1,"width");
         h1_mc.Scale(1/self.nev_rec);
         h1_mc.Scale(1/self.nch_rec);#nch
@@ -229,18 +113,15 @@ class calc_omega_wire:
         h1_data.SetDirectory(0);
         ROOT.SetOwnership(h1_data, False);
         h1_data.Sumw2();
-        #h1_data.RebinX(2);
         h1_data.Scale(1,"width");
         h1_data.Scale(1/self.nev_data);
         h1_data.Scale(1/self.nch_data);
 
         self.arr_rxy = arr_rxy
-        #hs_mc.GetAxis(0).SetRange(bin_pt_cut,bin_pt_end)
         h2_mc = hs_mc.Projection(0,1, "")
         h2_mc.SetName("h2_rec")
         outlist.Add(h2_mc)
         h2_data = hs_data.Projection(0,1, "")
-#        h2_data.Scale(1,"width")
         h2_data.SetName("h2_data")
         h2_data.Sumw2();
         outlist.Add(h2_data)
@@ -250,16 +131,12 @@ class calc_omega_wire:
             bin_pt_end_mc = hs_mc.GetAxis(0).GetNbins()
             bin_pt_cut_mc = hs_mc.GetAxis(0).FindBin(pt_cut);
  
-            # print("arr_rxy",self.arr_rxy)
             rxy = [0., 14., 30., 42., 58., 69., 90.]
             h1NGamma_mc = TH1F("h1NGamma", "NGamma", len(rxy)-1, array('d', rxy))
             h1NGamma_mc.SetName("h1NGamma_mc_pt{0}".format(ipt))
             h1NGamma_mc.SetTitle("NGamma/NGamma^{{wire}} for #it{{p}}_{{T}} >= {0} GeV/c, mc".format(pt_cut))
             h1NGamma_mc.SetXTitle("#it{r}_{xy} (cm)")
             h1NGamma_mc.SetYTitle("#it{N}_{#gamma}/#it{N}_{#gamma}^{wire}")
-            # print("gen", self.nch_gen, self.nev_gen)
-            # print("rec", self.nch_rec, self.nev_rec)
-            # print("data", self.nch_data, self.nev_data)
 
             list_mc_wire = self.list_v0_mc_rec.FindObject("wwire_ib")
             hs_mc_wire = list_mc_wire.FindObject("hs_conv_point").Clone("hs_mc_wire");
@@ -288,19 +165,16 @@ class calc_omega_wire:
                 h1NGamma_mc.SetBinError(ir+1, ngamma_mc_err_complete)
             outlist.Add(h1NGamma_mc)
 
-
             pt_cut = arr_pt_cuts[ipt]
             bin_pt_end_data = hs_data.GetAxis(0).GetNbins()
             bin_pt_cut_data = hs_data.GetAxis(0).FindBin(pt_cut);
 
-            # print("arr_rxy",self.arr_rxy)
             rxy = [0., 14., 30., 42., 58., 69., 90.]
             h1NGamma_data = TH1F("h1NGamma", "NGamma", len(rxy)-1, array('d', rxy))
             h1NGamma_data.SetName("h1NGamma_data_pt{0}".format(ipt))
             h1NGamma_data.SetTitle("NGamma/NGamma^{{wire}} for #it{{p}}_{{T}} >= {0} GeV/c, data".format(pt_cut))
             h1NGamma_data.SetXTitle("#it{r}_{xy} (cm)")
             h1NGamma_data.SetYTitle("#it{N}_{#gamma}/#it{N}_{#gamma}^{wire}")
-            # print("Nch", self.nch_data)
 
             list_data_wire = self.list_v0_data.FindObject("wwire_ib")
             hs_data_wire = list_data_wire.FindObject("hs_conv_point").Clone("hs_data_wire");
@@ -326,7 +200,6 @@ class calc_omega_wire:
                 print("wire method", r1, "ngamma data", ngamma, "+/-", ngamma_err.value)
                 h1NGamma_data.SetBinContent(ir+1, ngamma/ngamma_data_wire)
                 ngamma_err_complete = TMath.Sqrt((1./ngamma_data_wire*ngamma_err.value)**2 + (ngamma/ngamma_data_wire**2 * ngamma_data_err_wire.value)**2)
-                #(ngamma/ngamma_wire)* TMath.Sqrt((ngamma_err.value/ngamma)**2 + (ngamma_err_wire.value/ngamma_wire)**2)
                 h1NGamma_data.SetBinError(ir+1, ngamma_err_complete)
             outlist.Add(h1NGamma_data)
 
@@ -340,20 +213,11 @@ class calc_omega_wire:
         return outlist
     #_____________________________________________________________________
     def run(self, filename, type, date):
-        # print(sys._getframe().f_code.co_name);
-        # print("reading...", filename);
-
         taskname = "material-budget";
         if type == "mc":
             taskname = "material-budget-mc";
 
         rootfile = TFile.Open(filename, "READ");
-        # rootdire = rootfile.Get(taskname);
-        # list_v0 = rootdire.Get("V0");
-        # list_ev_1     = rootdire.Get("Event");
-        # list_ev = list_ev_1.FindObject("PCMPCM");
-
-        # date = datetime.date.today().strftime("%Y%m%d");
         outname = os.path.join(self.folder, "{0}_calibration_weights_wire_{1}_{2}TeV_{3}_and_{4}_{5}_new.root".format(date, self.config["common"]["system"], self.config["common"]["energy"], self.config["common"]["period"], self.config["common"]["period_mc"] ,self.suffix));
         print("out file name = ", outname);
         outfile = TFile(outname, "RECREATE");
@@ -367,7 +231,6 @@ class calc_omega_wire:
         for ic in range(0,nc):
             cutname = cutnames[ic];
             print("analyzing...", cutname);
-            # list_v0_cut = list_v0.FindObject(cutname);
             outlist = self.calc_in_Rbins(arr_rxy, arr_pt_cuts);
             outlist.SetName(cutname);
             outlist.SetOwner(True);
@@ -384,11 +247,6 @@ class calc_omega_wire:
         arr_pt_cuts = self.config["common"]["pt_cuts"];
 
         list= rootfile.Get("qc");
-        # list_mc = rootfile_mc.Get(cutname);
-        # list_data.ls();
-        # list_mc.ls();
-        # print(filename_data, filename_mc, self.cutname, self.period_data, self.period_mc, self.suffix)
-
         r_bins = [0, 14, 30, 42, 58, 69, 90]
         
         h1data_complete = list.FindObject("h1NGamma_data_pt{0}".format(ipt));
@@ -408,7 +266,6 @@ class calc_omega_wire:
 
         ymax = max(h1data_complete.GetMaximum() , h1mc_complete.GetMaximum()) * 3.5;
         ymin = max(h1data_complete.GetMinimum() , h1mc_complete.GetMinimum()) * -0.3;
-        # print("range plot", ymax, ymin)
         if ymin ==0:
             ymin = 1e-6
 
@@ -420,9 +277,6 @@ class calc_omega_wire:
         p1.SetMargin(0.15,0.02,0.,0.15);
         p1.SetTicks(1,1);
         p1.SetLogy();
-
-        #         p2.SetPad(0,0,1,0.2);
-        # p2.SetMargin(0.15,0.02,0.22,0.0);
         frame1 = p1.DrawFrame(0., ymin, 90, ymax); #(0., 1e-20, 10., 1e-1);#
         frame1.GetXaxis().SetTitle("#it{r}_{xy} (cm)")
         frame1.GetYaxis().SetTitle("#it{N}_{#gamma}/#it{N}_{wire}");
@@ -459,7 +313,6 @@ class calc_omega_wire:
         p2.SetTicks(1,1);
         cut_in_ratio = 0.5
 
-
         frame2 = p2.DrawFrame(0.,0.6,90.,1.2);
         frame2.GetXaxis().SetTitle("#it{r}_{xy} (cm)");
         frame2.GetYaxis().SetTitle("#it{#omega}_{#it{i}}");
@@ -480,8 +333,6 @@ class calc_omega_wire:
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
 
-
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -494,11 +345,6 @@ class calc_omega_wire:
         arr_pt_cuts = self.config["common"]["pt_cuts"];
 
         list= rootfile.Get("qc");
-        # list_mc = rootfile_mc.Get(cutname);
-        # list_data.ls();
-        # list_mc.ls();
-        # print(filename_data, filename_mc, self.cutname, self.period_data, self.period_mc, self.suffix)
-
         r_bins = [0, 14, 30, 42, 58, 69, 90]
         
         data_list = []
@@ -526,7 +372,6 @@ class calc_omega_wire:
 
         ymax = max(h1data_complete.GetMaximum() , h1mc_complete.GetMaximum()) * 2.;
         ymin = max(h1data_complete.GetMinimum() , h1mc_complete.GetMinimum()) * -0.3;
-        # print("range plot", ymax, ymin)
         if ymin ==0:
             ymin = 4.5*1e-7
 
@@ -539,8 +384,6 @@ class calc_omega_wire:
         p1.SetTicks(1,1);
         p1.SetLogy();
 
-        #         p2.SetPad(0,0,1,0.2);
-        # p2.SetMargin(0.15,0.02,0.22,0.0);
         frame1 = p1.DrawFrame(0., 1e-1, 90, 4*1e4); #(0., 1e-20, 10., 1e-1);#
         frame1.GetXaxis().SetTitle("#it{r}_{xy} (cm)")
         frame1.GetYaxis().SetTitle("#it{N}_{#gamma}/#it{N}_{wire}");
@@ -554,7 +397,6 @@ class calc_omega_wire:
             size = [2.0,1.8, 1.6]
             make_common_style(data_list[i], markerstlye_data[i], size[i], color[i], 1, 0);
             make_common_style(mc_list[i]  , markerstlye_mc[i], size[i], color[i], 1, 0);
-            #mc_list[i].SetLineStyle(2);
             data_list[i].Draw("E0same");
             mc_list[i].Draw("E0same");
 
@@ -581,7 +423,6 @@ class calc_omega_wire:
         leg.SetTextFont(42);#helvetica
         for i in range(len(data_list)):
             leg.AddEntry(data_list[i], "#it{{p}}_{{T}} > {0} GeV/c".format(arr_pt_cuts[i]),"LP");
-            #leg.AddEntry(h1mc_complete  , "M.C. rec. #gamma (LHC23d1k)","LP");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
@@ -595,14 +436,11 @@ class calc_omega_wire:
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-
-
         p2 = c1.cd(2);
         p2.SetPad(0,0,1,0.3);
         p2.SetMargin(0.15,0.02,0.22,0.0);
         p2.SetTicks(1,1);
         cut_in_ratio = 0.5
-
 
         frame2 = p2.DrawFrame(0.,0.6,90.,2.5);
         frame2.GetXaxis().SetTitle("#it{R}_{xy} (cm)");
@@ -618,7 +456,6 @@ class calc_omega_wire:
             h1ratio.Draw("E0same");
             h1ratio.SetDirectory(0);
             ROOT.SetOwnership(h1ratio,False);
-            #print(data_list[i].GetTitle(), "max", h1ratio.GetMaximum(), "min", h1ratio.GetMinimum())
 
         line1 = TLine(0.,1,90,1);
         line1.SetLineColor(kBlack);
@@ -627,45 +464,8 @@ class calc_omega_wire:
         line1.Draw("");
         ROOT.SetOwnership(line1,False);
 
-
-
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
         filepath = os.path.join(self.folder, "{0}_NGamma_wire_pt_combined_{2}.pdf".format(date, ipt, self.suffix));    
         c1.SaveAs(filepath);
-
-
-# if __name__:
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     #filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
-#     #filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
-#     config_file = "config_pp_13.6TeV_LHC22f_material.yml"
-#     with open(config_file, "r", encoding="utf-8") as config_yml:
-#         config = yaml.safe_load(config_yml)
-#     date = "this_thesis" # datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_calibration_weights/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-#     arr_pt_cuts = config["common"]["pt_cuts"];
-
-
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147811_LHC22_pass4_lowIR.root"
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147812_LHC23d1k.root"
-#     for type in ["data", "mc"]:
-#         if type == "data": 
-#             file = filename_data;
-#         elif type == "mc":
-#             file = filename_mc;
-#         NGamma_wire = calc_omega_wire(config, filename_data, filename_mc, cutname, folder, period_data, period_mc, suffix)
-#         NGamma_wire.run(file, type, date)
-
-#     file = "/Users/alicamarieenderich/this_thesis_calibration_weights/this_thesis_calibration_weights_wire_pp_13.6TeV_LHC22f_and_LHC23d1k_AnyTrack.root"
-
-#     for ipt in range(len(arr_pt_cuts)):
-#                 NGamma_wire.draw_NGamma_wire(file, ipt, date)
-#     NGamma_wire.draw_NGamma_wire_combined(file, arr_pt_cuts, date)

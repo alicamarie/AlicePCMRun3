@@ -231,7 +231,7 @@ class PlotHistoParametersCombined:
         if fPlottingType.CompareTo("wip")==0:
             textAlice       = "ALICE work in progress";
         elif fPlottingType.CompareTo("thesis")==0:
-            textAlice       = "ALICE this thesis";
+            textAlice       = "this thesis"; # only this thesis
         elif fPlottingType.CompareTo("performance")==0:
             textAlice       = "ALICE performance";
         else:

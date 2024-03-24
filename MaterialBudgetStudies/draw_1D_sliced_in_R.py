@@ -28,7 +28,6 @@ def make_common_style(g1,marker,size,color,width=1,fill=0):
     g1.SetFillStyle(fill);
 
 def find_phi_for_eta(hist, eta_value, output_file):
-    # eta_bin = hist.GetYaxis().FindBin(eta_value)
     x_bins = hist.GetNbinsX()
     mean =  hist.GetMean();
     with open(output_file, 'w') as file:
@@ -48,13 +47,9 @@ class draw_1D_sliced_rxy:
         self.period_data = period_data;
         self.period_mc = period_mc
         self.suffix = suffix;
-        # with open(config, "r", encoding="utf-8") as config_yml:
-        #     self.config = yaml.safe_load(config_yml)
         self.config = config
         self.folder = folder;
         
-
-
     def __del__(self):
         if self.rootfile.IsOpen():
             print("close input data root file.");
@@ -162,17 +157,6 @@ class draw_1D_sliced_rxy:
         rootdire = rootfile.Get(taskname); 
         list_v0 = rootdire.Get("V0");
         list_ev     = rootdire_pcm.Get("Event");
-        #list_ev = list_ev_1.FindObject("PCMPCM");
-        # if type == "mc":
-        #    list_ev = list_ev_1#.FindObject("PCMPCM");
-        # if type == "data":
-        #    list_ev = list_ev_1#.FindObject("PCMDalitzEE");
-
-        # pcmname = "pcm-qc";
-        # if type == "mc":
-        #     pcmname = "pcm-qc-mc";
-        # rootdire_pcm = rootfile.Get(pcmname); 
-        #date = datetime.date.today().strftime("%Y%m%d");
         outname = os.path.join(self.folder, "{0}_material_budget_dR_{1}_{2}_{3}TeV_{4}{5}.root".format(date, type, self.config["common"]["system"], self.config["common"]["energy"], self.config["common"]["period"], self.suffix));
         outfile = TFile(outname, "RECREATE");
 
@@ -196,7 +180,6 @@ class draw_1D_sliced_rxy:
     def draw_material_phi(self, filename_data, filename_mc, cutname, etaid, rid, date):
         rootfile_data = TFile.Open(filename_data, "READ");
         rootfile_mc   = TFile.Open(filename_mc  , "READ");
-        #date = datetime.date.today().strftime("%Y%m%d");
 
         list_data = rootfile_data.Get(cutname);
         list_mc = rootfile_mc.Get(cutname);
@@ -210,13 +193,6 @@ class draw_1D_sliced_rxy:
         h1mc_complete = list_mc.FindObject("h1phi_eta{0:d}_r{1:d}".format(etaid, rid));
         h1data_complete.SetDirectory(0);
         h1mc_complete.SetDirectory(0);
-        # for eta_range in range(eta_min+1,eta_max+1):
-        #     h1data = list_data.FindObject("h1phi_eta{0:d}_r{1:d}".format(eta_range, rid));
-        #     h1mc = list_mc.FindObject("h1phi_eta{0:d}_r{1:d}".format(eta_range, rid));
-        #     h1data.SetDirectory(0);
-        #     h1mc.SetDirectory(0);
-        #     h1data_complete += h1data
-        #     h1mc_complete += h1mc
     
         #normalization
         h1data_complete.Sumw2()
@@ -345,48 +321,12 @@ class draw_1D_sliced_rxy:
 
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "ratio \pm 5%", "LP")
-        #if generated == True:
-         #   leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
         filepath = os.path.join(self.folder, "{0}_material_budget_vs_phi_eta{1}_r{2}_{3}.pdf".format(date, etaid, rid, self.suffix));    
         c1.SaveAs(filepath);
-
-# #________________________________________________
-# if __name__:
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     config_file = "/Users/alicamarieenderich/material_budget_FSP_update/config_pp_13.6TeV_LHC22f_material.yml"
-#     with open(config_file, "r", encoding="utf-8") as config_yml:
-#         config = yaml.safe_load(config_yml)
-#     date = datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-
-#     for type in ["data", "mc"]:
-#         if type == "data": 
-#             file = filename_data;
-#         elif type == "mc":
-#             file = filename_mc;
-#         draw_sliced = draw_1D_sliced_rxy(config, suffix, folder, period_data, period_mc);
-#         draw_sliced.run(file, type);
-
-#     filename_mc_rxy = os.path.join(folder, "{0}_material_budget_dR_mc_{1}_{2}TeV_{3}{4}.root".format(date, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix));
-#     filename_data_rxy = os.path.join(folder, "{0}_material_budget_dR_data_{1}_{2}TeV_{3}{4}.root".format(date, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix));
-    
-#     draw_sliced = draw_1D_sliced_rxy(config, suffix, folder, period_data, period_mc);
-#     for eta in range(6):
-#         r = 3
-#         draw_sliced.draw_material_phi(filename_data_rxy, filename_mc_rxy, cutname, eta, r);

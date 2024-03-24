@@ -36,10 +36,6 @@ def make_common_style(g1,marker,size,color,width=1,fill=0):
     g1.SetFillStyle(fill);
 
 def draw_comparison_yields(list_data, list_mc, index, cutname, date):
-        # ymin = [6*1e-3, 125*1e-3,  10*1e-4]
-        # ymax = [22*1e-3, 138*1e-3 , 110*1e-4]
-        # for i in range(len(list_data)):
-        #     print("MAX", list_data[i].GetMaximum(),list_mc[i].GetMaximum())
     #canvas plotting
         c1 = TCanvas("c0","c0",0,0,800,800);
         c1.Divide(1,2,1e-3,1e-3);
@@ -70,7 +66,6 @@ def draw_comparison_yields(list_data, list_mc, index, cutname, date):
 
                 make_common_style(list_data[i], 20, 0.9, color[i], 1, 0);
                 make_common_style(list_mc[i], 25, 0.9, color[i], 1, 0);
-                #mc_list[i].SetLineStyle(2);
                 list_data[i].Draw("E0same");
                 list_mc[i].Draw("E0same");
 
@@ -127,7 +122,6 @@ def draw_comparison_yields(list_data, list_mc, index, cutname, date):
         p2.SetMargin(0.15,0.02,0.22,0.0);
         p2.SetTicks(1,1);
         cut_in_ratio = 0.5
-
 
         frame2 = p2.DrawFrame(0,0.2,10.,1.6);
         frame2.GetXaxis().SetTitle("#it{p}_{T} (GeV/c)");
@@ -262,7 +256,6 @@ def run(filename_data, filename_mc,config,type,folder):
                         list_plot = list_fitname.FindObject("fit_0.04_0.20_GeVc2")
                         yield_list.append(list_plot.FindObject("h1yield_param"))
 
-
                         parameter_list = [];
                         same_list = [];
                         mixed_list = [];
@@ -273,10 +266,6 @@ def run(filename_data, filename_mc,config,type,folder):
                             if "param" in objName:
                                 parameter_list.append(obj)
                             obj = it.Next()
-                        # print("HERE")
-                        # for i in range(len(parameter_list)):
-                        #     print(parameter_list[i].GetTitle())
-        # pdf output of mass, amplitude and width for each fit and comparison of all cuts
                             parameter_comparison = [];
                             for i_parameter in range(5):
                                 parameter_comparison.append(parameter_list[i_parameter]);
@@ -285,77 +274,35 @@ def run(filename_data, filename_mc,config,type,folder):
     list_parameters_data, yield_list_data = loop_data(rootfile_data)
     list_parameters_mc, yield_list_mc = loop_mc(rootfile_mc)
 
-
-    # print("START")
-    # for i in range(len(list_parameters_data)):
-    #     for j in range(len(list_parameters_data[1])):
-    #         print(list_parameters_data[i][j].GetTitle())
-    
-
-    # list_data_mean = []
-    # list_data_lambda = []
-    # list_data_sigma = []
-    # for i in range(len(list_parameters_data)):
-    #     for j in range(len(list_parameters_data[1])):
-    #         if list_parameters_data[i][j].GetTitle() == "mean":
-    #             list_data_mean.append(list_parameters_data[i][j])
-    #         if list_parameters_data[i][j].GetTitle() == "lambda":
-    #             list_data_lambda.append(list_parameters_data[i][j])
-    #         if list_parameters_data[i][j].GetTitle() == "sigma":
-    #             list_data_sigma.append(list_parameters_data[i][j])
-
-
-    # list_mc_mean = []
-    # list_mc_lambda = []
-    # list_mc_sigma = []
-    # for i in range(len(list_parameters_mc)):
-    #     for j in range(len(list_parameters_mc[1])):
-    #         if list_parameters_mc[i][j].GetTitle() == "mean":
-    #             list_mc_mean.append(list_parameters_mc[i][j])
-    #         if list_parameters_mc[i][j].GetTitle() == "lambda":
-    #             list_mc_lambda.append(list_parameters_mc[i][j])
-    #         if list_parameters_mc[i][j].GetTitle() == "sigma":
-    #             list_mc_sigma.append(list_parameters_mc[i][j])
-    
-    # print(list_data_lambda)
-    # print(list_data_mean)
-    # print(list_data_sigma)
-    # print(list_mc_lambda)
-    # print(list_mc_mean)
-    # print(list_mc_sigma)
-
-    # list_data = [list_data_lambda, list_data_mean, list_data_sigma]
-    # list_mc = [list_mc_lambda, list_mc_mean, list_mc_sigma]
-
     print(yield_list_data)
     print(yield_list_mc)
-    # outname_histo_linear = os.path.join(folder, "{0}_{1}_InvMass_Parameters_Comparison.pdf".format(date, period));
     for i in range(3):
         draw_comparison_yields(yield_list_data, yield_list_mc, i,yield_list_data[0].GetTitle(), date)
 
-period_array = ["LHC22f", "LHC23d1k"]
+if __name__ == "__main__":
+    period_array = ["LHC22f", "LHC23d1k"]
 
-filename_array = ["/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124838_LHC22f_pass4.root",
-            "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124837_LHC23d1k.root",]
+    filename_array = ["/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124838_LHC22f_pass4.root",
+                "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124837_LHC23d1k.root",]
 
-type_array = ["data", "mc"]
+    type_array = ["data", "mc"]
 
-config_array = ["/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml",
-                "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC23d1k.yml"]
+    config_array = ["/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml",
+                    "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC23d1k.yml"]
 
-for i in range(len(period_array)):
-    period = period_array[i]
-    filename = filename_array[i]
-    cutname = "qc"
-    suffix = "AnyTrack";
-    type = type_array[i]
-    config_file = config_array[i]
-    with open(config_file, "r", encoding="utf-8") as config_yml:
-        config = yaml.safe_load(config_yml)
-    date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-    folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots/".format(date, period);  
-    os.makedirs(folder, exist_ok=True);
-    filename_data = "/Users/alicamarieenderich/this_thesis_LHC22f_invariant_mass_plots/this_thesis_LHC22f_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
-    filename_mc = "/Users/alicamarieenderich/this_thesis_LHC23d1k_invariant_mass_plots/this_thesis_LHC23d1k_pi0_mc_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+    for i in range(len(period_array)):
+        period = period_array[i]
+        filename = filename_array[i]
+        cutname = "qc"
+        suffix = "AnyTrack";
+        type = type_array[i]
+        config_file = config_array[i]
+        with open(config_file, "r", encoding="utf-8") as config_yml:
+            config = yaml.safe_load(config_yml)
+        date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
+        folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots/".format(date, period);  
+        os.makedirs(folder, exist_ok=True);
+        filename_data = "/Users/alicamarieenderich/this_thesis_LHC22f_invariant_mass_plots/this_thesis_LHC22f_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+        filename_mc = "/Users/alicamarieenderich/this_thesis_LHC23d1k_invariant_mass_plots/this_thesis_LHC23d1k_pi0_mc_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
 
-    run(filename_data, filename_mc,config,type,folder)
+        run(filename_data, filename_mc,config,type,folder)

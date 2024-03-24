@@ -41,16 +41,14 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
 
     h2_data = list_cut_data.FindObject("hGammaRxy")#("hGammaRxy_recalc");
     h2_data.Sumw2();
-    #h2_data.RebinX(5);
     h2_data.SetZTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} N_{#gamma} ");
     h2_data.GetZaxis().SetTitleOffset(1.9);
     h2_data.SetDirectory(0);
-    h2_data.GetXaxis().SetRangeUser(0,100); # previous: -100
-    h2_data.GetYaxis().SetRangeUser(0,100); # previous: -100
+    h2_data.GetXaxis().SetRangeUser(-100,100); # previous: -100
+    h2_data.GetYaxis().SetRangeUser(-100,100); # previous: -100
     h2_data.GetXaxis().SetTitleOffset(1.9)
     ROOT.SetOwnership(h2_data, False);
 
-#   hGammaRxy.Scale(1/dr);
     h2_data.Scale(1/nev_data);
     h2_data.Scale(1/nch_data);
 
@@ -59,7 +57,7 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     c1.SetMargin(0.13,0.2,0.13,0.13);
     c1.SetTicks(1,1);
 
-    frame1 = c1.DrawFrame(-10, -10, 10, 10);
+    frame1 = c1.DrawFrame(-100, -100, 100, 100);
     frame1.GetXaxis().SetTitle("conversion point #it{#varphi} (rad.)");
     frame1.GetYaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #it{N}_{#gamma} ");
     FrameSettings2D(frame1)
@@ -74,7 +72,6 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     txt.SetTextAlign(22);#centered,left
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.05);
-   # txt.AddText("#gamma-ray tomography of ITS2 and parts of TPC")
     txt.AddText("Data #gamma (LHC22f)")
     txt.Draw();
     ROOT.SetOwnership(txt,False);
@@ -95,16 +92,16 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     x0 = r * TMath.Cos(phi0)
     y0 = r * TMath.Sin(phi0)
 
-    # x1 = r * TMath.Cos(phi1)
-    # y1 = r * TMath.Sin(phi1)
+    x1 = r * TMath.Cos(phi1)
+    y1 = r * TMath.Sin(phi1)
 
-    # x2 = r * TMath.Cos(phi2)
-    # y2 = r * TMath.Sin(phi2)
+    x2 = r * TMath.Cos(phi2)
+    y2 = r * TMath.Sin(phi2)
 
-    # x3 = r * TMath.Cos(phi3)
+    x3 = r * TMath.Cos(phi3)
     y3 = r * TMath.Sin(phi3)
 
-    for i in range(1):
+    for i in range(4):
         x = vars()['x{}'.format(i)]
         y = vars()['y{}'.format(i)]
         radius = (58-42)/2
@@ -134,16 +131,3 @@ def draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, da
     ROOT.SetOwnership(c1,False);
     outname = os.path.join(folder, "{0}_material_budget_hPhotonRxy_data_circle_{1}_{2}.png".format(date, cutname, suffix))
     c1.SaveAs(outname);
-
-# if __name__ == "__main__":
-#     period_data     = "LHC22f";
-#     period_mc       = "LHC23d1k";
-#     filename_mc     = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data   = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     cutname = "qc";
-#     suffix = "" 
-#     date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-    
-#     draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, date);

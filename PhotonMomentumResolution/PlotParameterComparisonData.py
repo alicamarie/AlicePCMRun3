@@ -59,12 +59,12 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
         if list_data0[0].GetTitle() == "mean":
              yTitle = title_list[0]
         frame1.GetYaxis().SetTitle(yTitle);
-        frame1.GetXaxis().SetTitleSize(0.045);
-        frame1.GetYaxis().SetTitleSize(0.045);
+        frame1.GetXaxis().SetTitleSize(0.03);
+        frame1.GetYaxis().SetTitleSize(0.03);
         frame1.GetXaxis().SetTitleOffset(1.0);
         frame1.GetYaxis().SetTitleOffset(1.52);
-        frame1.GetXaxis().SetLabelSize(0.045);
-        frame1.GetYaxis().SetLabelSize(0.045);
+        frame1.GetXaxis().SetLabelSize(0.03);
+        frame1.GetYaxis().SetLabelSize(0.03);
         frame1.GetYaxis().SetMaxDigits(3);
         frame1.GetXaxis().SetLabelOffset(0.01);
         frame1.GetYaxis().SetLabelOffset(0.01);
@@ -74,9 +74,9 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
         color = [kRed+1, kBlue+1, kGreen+2, kMagenta+2, kCyan+1]
         for i in range(len(list_data0)):
                 print(i, list_data0[i].GetTitle(), len(list_data0))
-                make_common_style(list_data0[i], 20, 1.5, color[0], 1, 0);
-                make_common_style(list_data1[i], 21, 1.5, color[1], 1, 0); #0.9
-                make_common_style(list_data2[i], 22, 1.5, color[2], 1, 0);
+                make_common_style(list_data0[i], 20, 0.9, color[0], 1, 0);
+                make_common_style(list_data1[i], 21, 0.9, color[1], 1, 0); #0.9
+                make_common_style(list_data2[i], 22, 0.9, color[2], 1, 0);
 
                 if list_data0[0].GetTitle() == "mean":
                     list_data0[i].Scale(1000.)
@@ -111,8 +111,8 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
         txt.SetBorderSize(0);
         txt.SetTextAlign(32);#middle,left
         txt.SetTextFont(42);#helvetica
-        txt.SetTextSize(0.045);#0.03
-        txt.AddText("ALICE this thesis");
+        txt.SetTextSize(0.03);#0.03
+        txt.AddText("this thesis");
         txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
         txt.AddText("Data #gamma candidates for")
         txt.Draw();
@@ -122,12 +122,9 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
         leg.SetBorderSize(0);
         leg.SetFillColor(kWhite);
         leg.SetFillStyle(0);
-        leg.SetTextSize(0.045); #0.03
+        leg.SetTextSize(0.03); #0.03
         leg.SetTextAlign(12);
         leg.SetTextFont(42);#helvetica
-        # leg.AddEntry(list_data0[0], "Data #gamma candidates (LHC22f)","LP");
-        # leg.AddEntry(list_data1[0] , "Data #gamma candidates (LHC23zc)","LP");
-        # leg.AddEntry(list_data2[0] , "Data #gamma candidates (LHC22o min Bias)","LP");
         leg.AddEntry(list_data0[0], "LHC22f","LP");
         leg.AddEntry(list_data1[0] , "LHC23zc","LP");
         leg.AddEntry(list_data2[0] , "LHC22o min Bias","LP");
@@ -167,7 +164,7 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
                 h1ratio.Reset();
                 h1ratio.Sumw2();
                 h1ratio.Divide(list_data1[i], list_data0[i], 1., 1., "G");
-                make_common_style(h1ratio, 21, 1.5, color[1], 1, 0); #0.9
+                make_common_style(h1ratio, 21, 0.9, color[1], 1, 0); #0.9
                 h1ratio.Draw("E0same");
                 h1ratio.SetDirectory(0);
                 ROOT.SetOwnership(h1ratio,False);
@@ -176,7 +173,7 @@ def draw_comparison_parameters(list_data0, list_data1, list_data2, index, fit_va
                 h1ratio.Reset();
                 h1ratio.Sumw2();
                 h1ratio.Divide(list_data2[i], list_data0[i], 1., 1., "G");
-                make_common_style(h1ratio, 22, 1.5, color[2], 1, 0); #0.9
+                make_common_style(h1ratio, 22, 0.9, color[2], 1, 0); #0.9
                 h1ratio.Draw("E0same");
                 h1ratio.SetDirectory(0);
                 ROOT.SetOwnership(h1ratio,False);
@@ -256,96 +253,10 @@ def run(filename_data0, filename_data1, filename_data2,config,type,folder, perio
                     mean_list.append(list_plot.FindObject("h1mean_param"))
                     fwhm_list.append(list_plot.FindObject("h1fwhm_param"))                        
             return mean_list, fwhm_list, yield_list  
-            return mean_list, fwhm_list, yield_list  
-    # def loop_mc(rootfile): 
-    #         for isys in range(0,nsys):
-    #             ssname = config[type]['subsystems'][isys]['name']; #subsystem name
-    #             print("plot subsystem", ssname);
-    #             cuts = config[type]["subsystems"][isys]['cuts']
-    #             cutnames = [cut['name'] for cut in cuts]
-    #             print("cutnames", cutnames); 
-    #             nc = len(cutnames);
-    #             nfit = len(list_fit_func)
-    #             list_parameters_comparison = [];
-    #             yield_list = [];
-    #             list_ss   = rootfile.Get(ssname);
-    #             for ic in range(0,nc):
-    #                 cutname = cutnames[ic];
-    #                 list_ss_cut = list_ss.FindObject(cutname);
-    #                 print("cutname ", cutname)             
-    #                 for ifit in range(0, nfit): 
-    #                     fitname = "gausexp";
-    #                     list_fitname  = list_ss_cut.FindObject(fitname);
-    #                     print("fitname ", fitname)
-
-    #                     list_plot = list_fitname.FindObject("fit_0.04_0.20_GeVc2")
-    #                     yield_list.append(list_plot.FindObject("h1yield_param"))
-
-
-    #                     parameter_list = [];
-    #                     same_list = [];
-    #                     mixed_list = [];
-    #                     it = ROOT.TIter(list_plot)
-    #                     obj = it.Next()
-    #                     while obj:
-    #                         objName = obj.GetName()
-    #                         if "param" in objName:
-    #                             parameter_list.append(obj)
-    #                         obj = it.Next()
-    #                     print("HERE")
-    #                     for i in range(len(parameter_list)):
-    #                         print(parameter_list[i].GetTitle())
-    #     # pdf output of mass, amplitude and width for each fit and comparison of all cuts
-    #                         parameter_comparison = [];
-    #                         for i_parameter in range(5):
-    #                             parameter_comparison.append(parameter_list[i_parameter]);
-    #                         list_parameters_comparison.append(parameter_comparison);
-    #         return list_parameters_comparison, yield_list     
-            return mean_list, fwhm_list, yield_list   
-    # def loop_mc(rootfile): 
-    #         for isys in range(0,nsys):
-    #             ssname = config[type]['subsystems'][isys]['name']; #subsystem name
-    #             print("plot subsystem", ssname);
-    #             cuts = config[type]["subsystems"][isys]['cuts']
-    #             cutnames = [cut['name'] for cut in cuts]
-    #             print("cutnames", cutnames); 
-    #             nc = len(cutnames);
-    #             nfit = len(list_fit_func)
-    #             list_parameters_comparison = [];
-    #             yield_list = [];
-    #             list_ss   = rootfile.Get(ssname);
-    #             for ic in range(0,nc):
-    #                 cutname = cutnames[ic];
-    #                 list_ss_cut = list_ss.FindObject(cutname);
-    #                 print("cutname ", cutname)             
-    #                 for ifit in range(0, nfit): 
-    #                     fitname = "gausexp";
-    #                     list_fitname  = list_ss_cut.FindObject(fitname);
-    #                     print("fitname ", fitname)
-
-    #                     list_plot = list_fitname.FindObject("fit_0.04_0.20_GeVc2")
-    #                     yield_list.append(list_plot.FindObject("h1yield_param"))
-
-
-    #                     parameter_list = [];
-    #                     same_list = [];
-    #                     mixed_list = [];
-    #                     it = ROOT.TIter(list_plot)
-    #                     obj = it.Next()
-    #                     while obj:
-    #                         objName = obj.GetName()
-    #                         if "param" in objName:
-    #                             parameter_list.append(obj)
-    #                         obj = it.Next()
-    #                     print("HERE")
-    #                     for i in range(len(parameter_list)):
-    #                         print(parameter_list[i].GetTitle())
-    #     # pdf output of mass, amplitude and width for each fit and comparison of all cuts
-    #                         parameter_comparison = [];
-    #                         for i_parameter in range(5):
-    #                             parameter_comparison.append(parameter_list[i_parameter]);
-    #                         list_parameters_comparison.append(parameter_comparison);
-    #         return list_parameters_comparison, yield_list     
+            # return mean_list, fwhm_list, yield_list  
+    
+            # return mean_list, fwhm_list, yield_list   
+    
 
     mean_list_data0,fwhm_list_data0, yield_list_data0 = loop_data(rootfile_data0)
     mean_list_data1,fwhm_list_data1, yield_list_data1 = loop_data(rootfile_data1)
@@ -360,44 +271,44 @@ def run(filename_data0, filename_data1, filename_data2,config,type,folder, perio
     for i in range(3):
         draw_comparison_parameters(list_data0[i], list_data1[i], list_data2[i], i, list_data0[i][0].GetTitle(), date, period_str)
 
-period_array = ["LHC22f", "LHC23zc", "LHC22o_minBias"]
+if __name__ == "__main__":
+    period_array = ["LHC22f", "LHC23zc", "LHC22o_minBias"]
 
-filename_array = ["/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124838_LHC22f_pass4.root",
-                  "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_134765_LHC23zc_pass1_relval_itstpcmap_1.root",
-            "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_135860_LHC22o_pass4_minBias_medium.root"]
+    filename_array = ["/Users/alicamarieenderich/AnalysisResults/AnalysisResults_124838_LHC22f_pass4.root",
+                    "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_134765_LHC23zc_pass1_relval_itstpcmap_1.root",
+                "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_135860_LHC22o_pass4_minBias_medium.root"]
 
-type_array = ["data", "data", "data"]
+    type_array = ["data", "data", "data"]
 
-config_array = ["/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml",
-                "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC23zc.yml",
-                "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22o_medium.yml"]
+    config_array = ["/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22f.yml",
+                    "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC23zc.yml",
+                    "/Users/alicamarieenderich/202312_invariant_mass_code/configs/config_pp_13.6TeV_pi0_LHC22o_medium.yml"]
 
-period_str = ""
-for i in range(len(period_array)):
-    period_str += period_array[i]
-    period_str += "_"
-    print("period_str", period_str)
+    period_str = ""
+    for i in range(len(period_array)):
+        period_str += period_array[i]
+        period_str += "_"
+        print("period_str", period_str)
 
-for i in range(len(period_array)):
-    period = period_array[i]
-    filename = filename_array[i]
-    cutname = "qc"
-    suffix = "AnyTrack";
-    type = type_array[i]
-    config_file = config_array[i]
-    with open(config_file, "r", encoding="utf-8") as config_yml:
-        config = yaml.safe_load(config_yml)
-    # Date or prefix "this_thesis"
-    date = "presentation" #"this_thesis" #datetime.date.today().strftime("%Y%m%d");
-    folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots/".format(date, period);  
-    os.makedirs(folder, exist_ok=True);
-    # input files from fitting process
-    filename_data0 = "/Users/alicamarieenderich/this_thesis_LHC22f_invariant_mass_plots/this_thesis_LHC22f_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
-    filename_data1 = "/Users/alicamarieenderich/this_thesis_LHC23zc_invariant_mass_plots/this_thesis_LHC23zc_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
-    filename_data2 = "/Users/alicamarieenderich/this_thesis_LHC22o_minBias_invariant_mass_plots/this_thesis_LHC22o_minBias_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
-    # filename_mc = "/Users/alicamarieenderich/this_thesis_LHC23d1k_invariant_mass_plots/this_thesis_LHC23d1k_pi0_mc_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
-    print(config_file)
-    print(period)
-    print(filename)
-    run(filename_data0, filename_data1, filename_data2,config,type,folder, period_str)
-    print("input period_str", period_str)
+    for i in range(len(period_array)):
+        period = period_array[i]
+        filename = filename_array[i]
+        cutname = "qc"
+        suffix = "AnyTrack";
+        type = type_array[i]
+        config_file = config_array[i]
+        with open(config_file, "r", encoding="utf-8") as config_yml:
+            config = yaml.safe_load(config_yml)
+        # Date or prefix "this_thesis"
+        date = "this_thesis" #"presentation" #"this_thesis" #datetime.date.today().strftime("%Y%m%d");
+        folder = "/Users/alicamarieenderich/{0}_{1}_invariant_mass_plots/".format(date, period);  
+        os.makedirs(folder, exist_ok=True);
+        # input files from fitting process
+        filename_data0 = "/Users/alicamarieenderich/this_thesis_LHC22f_invariant_mass_plots/this_thesis_LHC22f_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+        filename_data1 = "/Users/alicamarieenderich/this_thesis_LHC23zc_invariant_mass_plots/this_thesis_LHC23zc_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+        filename_data2 = "/Users/alicamarieenderich/this_thesis_LHC22o_minBias_invariant_mass_plots/this_thesis_LHC22o_minBias_pi0_data_ptspectrum_pp_13.6TeV_LHC22f_AnyTrack.root"
+        print(config_file)
+        print(period)
+        print(filename)
+        run(filename_data0, filename_data1, filename_data2,config,type,folder, period_str)
+        print("input period_str", period_str)

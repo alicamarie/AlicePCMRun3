@@ -55,7 +55,7 @@ class PairAnalyzer:
             bin1 = h2.GetXaxis().FindBin(x1 - delta);
             h1 = h2.ProjectionY("h1prjy_{0}".format(h2.GetName()),bin0,bin1,"e"); # "e" for error calculation
 
-        if isdiff and h1.Class() == TH1D.Class(): #do you want differential histogram? e.g. dN/dpT, dN/dm.
+        if isdiff and h1.Class() == TH1D.Class(): 
             h1.Scale(1.,"width");
         return h1;
 
@@ -510,7 +510,7 @@ class PairAnalyzer:
                 raw_yield, error_raw_yield = self.calculate_raw_yield(h1prepared, params, params_err, (pt2-pt1), nev)
             elif self.type == "mc":
                 raw_yield, error_raw_yield = self.calculate_raw_yield_MC(h1prepared, params, params_err, (pt2-pt1), nev)
-            # Only add data points if amplitude bigger than 20
+            # Only add data points if amplitude bigger than 20:
             #if amplitude >= 20/1e8:
             h1amplitude.SetBinContent(i+1, amplitude)
             h1amplitude.SetBinError(i+1, amplitude_err)

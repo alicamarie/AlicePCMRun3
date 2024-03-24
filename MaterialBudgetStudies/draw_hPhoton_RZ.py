@@ -38,11 +38,9 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
     rootdir_mc_gen  = rootfile_mc.Get("pcm-qc-mc")
     list_gen        = rootdir_mc_gen.Get("Generated");
     list_ev_mc_gen     = rootdir_mc_gen.Get("Event");
-    # list_ev_mc_gen  = list_ev_gen.FindObject("PCMPCM");
     rootdir_mc_rec  = rootfile_mc.Get("pcm-qc-mc");
     list_v0_mc_rec  = rootdir_mc_rec.Get("V0");
     list_ev_mc_rec     = rootdir_mc_rec.Get("Event")
-    # list_ev_mc_rec  = list_ev_rec.FindObject("PCMPCM");
 
     list_cut_mc_rec = list_v0_mc_rec.FindObject("qc");
 
@@ -80,13 +78,11 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
         frame1 = p1.DrawFrame(-1.*cut, 0, cut, 90);
     else:
         frame1 = p1.DrawFrame(-1.*cut, 0, cut, cut);
-    # frame1 = p1.DrawFrame( 0,-250, 100, 250);
     frame1.GetYaxis().SetTitle("#it{R}_{xy} (cm)");
     frame1.GetXaxis().SetTitle("#it{z} (cm)");
     FrameSettings2D(frame1)
 
     gPad.SetLogz()
-    # rotated_hist.Draw("COLZ SAME")
     h2rz.Draw("COLZ SAME")
     txt = TPaveText(0.0,0.95,1.0,0.92,"NDC");
     txt.SetFillColor(kWhite);
@@ -96,18 +92,16 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.04);
     txt.AddText("structures in ITS2 and parts of TPC")
-    # txt.AddText("R_{xy} vs. z, M.C. gen. #gamma (LHC23d1k)")
     txt.Draw();
     ROOT.SetOwnership(txt,False);
     txt = TPaveText(0.52,0.77,0.78,0.85,"NDC");
     txt.SetFillColor(kWhite);
     txt.SetFillStyle(1001);
     txt.SetBorderSize(0);
-    # txt.SetTextColor(kRed)
     txt.SetTextAlign(32);#middle,left
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.03);
-    txt.AddText("ALICE simulation")
+    txt.AddText("this thesis")
     txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
     txt.Draw();
     ROOT.SetOwnership(txt,False);
@@ -217,31 +211,12 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description,struct
         leg.SetFillStyle(0);
         leg.SetTextSize(0.02);
         leg.AddEntry(line3   ,"Layers of the ITS", "L");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "support structure ITS & MFT", "L")
         leg.AddEntry(line4, "TPC inner containment vessel", "L")
         leg.AddEntry(line5, "TPC inner field cage vessel", "L")
-        #if generated == True:
-         #   leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
-        # leg.Draw("");
         ROOT.SetOwnership(leg,False);
-
 
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
     c1.SaveAs(os.path.join(folder,"{0}_material_budget_RZ_cut_{1}_{2}_{3}.png".format(date, cut, description, suffix)));
-
-# if __name__ == "__main__":
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-#     draw_material_RZ(filename_data, filename_mc, suffix, 40, "wire", folder, date);
-#     draw_material_RZ(filename_data, filename_mc, suffix, 250, "complete_comparison", folder, date);

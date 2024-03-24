@@ -80,7 +80,6 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description, folde
     FrameSettings2D(frame1)
 
     gPad.SetLogz()
-    # rotated_hist.Draw("COLZ SAME")
     h2rz.Draw("COLZ SAME")
     txt = TPaveText(0.0,0.95,1.0,0.92,"NDC");
     txt.SetFillColor(kWhite);
@@ -98,17 +97,3 @@ def draw_material_RZ(filename_data, filename_mc, suffix, cut, description, folde
     c1.Update();
     ROOT.SetOwnership(c1,False);
     c1.SaveAs(os.path.join(folder,"{0}_material_budget_RZ_cut_{1}_{2}_{3}.png".format(date, cut, description, suffix)));
-
-# if __name__ == "__main__":
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-#     draw_material_RZ(filename_data, filename_mc, suffix, 40, "wire", folder, date);
-#     draw_material_RZ(filename_data, filename_mc, suffix, 250, "complete_comparison", folder, date);

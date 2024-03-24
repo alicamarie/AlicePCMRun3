@@ -234,7 +234,7 @@ class PlotInvMass:
         if fPlottingType.CompareTo("wip")==0:
             textAlice       = "ALICE work in progress";
         elif fPlottingType.CompareTo("thesis")==0:
-            textAlice       = "ALICE this thesis";
+            textAlice       = "this thesis"; #only this thesis
         elif fPlottingType.CompareTo("performance")==0:
             textAlice       = "ALICE performance";
         else:
@@ -415,7 +415,7 @@ class PlotInvMass:
         if fPlottingType.CompareTo("wip")==0:
             textAlice       = "ALICE work in progress";
         elif fPlottingType.CompareTo("thesis")==0:
-            textAlice       = "ALICE this thesis";
+            textAlice       = "this thesis"; # only this thesis
         elif fPlottingType.CompareTo("performance")==0:
             textAlice       = "ALICE performance";
         else:
@@ -462,13 +462,13 @@ class PlotInvMass:
         del pad;
         del canvas;
 
-if __name__ == "__main__":
-    cuts = True
-    generated = True
-    cutname = "qc"
-    period = "LHC23d1k";
-    suffix = "AnyTrack";
-    file = "/Users/alicamarieenderich/20231015_invariant_mass_plots/pi0_data_ptspectrum_pp_13.6TeV_LHC22qAnyTrack_copied_run.root"
-    dirname = ""
-    draw = PlotInvMass("pi0", file, dirname)
-    plottingRange = [0., 0.3]
+# if __name__ == "__main__":
+#     cuts = True
+#     generated = True
+#     cutname = "qc"
+#     period = "LHC23d1k";
+#     suffix = "AnyTrack";
+#     file = "/Users/alicamarieenderich/20231015_invariant_mass_plots/pi0_data_ptspectrum_pp_13.6TeV_LHC22qAnyTrack_copied_run.root"
+#     dirname = ""
+#     draw = PlotInvMass("pi0", file, dirname)
+#     plottingRange = [0., 0.3]

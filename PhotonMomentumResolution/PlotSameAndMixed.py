@@ -139,20 +139,6 @@ class PlotSameMixed:
 
             DrawHisto(fHistoSamePtBinPlot[iPt], kBlue, "Hsame", 0.9, 24);
             DrawHisto(fHistoMixedPtBinPlot[iPt], kRed, "Hsame", 0.9, 24);
-        #DrawHisto(list_data0[0], kGreen+2, "Hsame", 0.9, 24); 
-            # line2 = TLine(fit_min,yMin,fit_min,1.6*yMax);
-            # line2.SetLineColor(kRed);
-            # line2.SetLineStyle(2);
-            # line2.SetLineWidth(1);
-            # line2.Draw("");
-            # ROOT.SetOwnership(line2,False); 
-
-            # line2 = TLine(fit_max,yMin,fit_max,1.6*yMax);
-            # line2.SetLineColor(kRed);
-            # line2.SetLineStyle(2);
-            # line2.SetLineWidth(1);
-            # line2.Draw("");
-            # ROOT.SetOwnership(line2,False); 
 
             line4 = TLine(self.integral_min,yMin,self.integral_min,1.6*yMax);
             line4.SetLineColor(kGray+2);
@@ -207,17 +193,12 @@ class PlotSameMixed:
         if fPlottingType.CompareTo("wip")==0:
             textAlice       = "ALICE work in progress";
         elif fPlottingType.CompareTo("thesis")==0:
-            textAlice       = "ALICE this thesis";
+            textAlice       = "this thesis"; # only this thesis
         elif fPlottingType.CompareTo("performance")==0:
             textAlice       = "ALICE performance";
         else:
             textAlice       = "ALICE";
 
-        # textEvents="";
-        # if fMonteCarloInfo:
-        #     textEvents          = "MC";
-        # else:
-        #     textEvents          = "Data";
 
         if  padLegend.XtoPixel(padLegend.GetX2()) < padLegend.YtoPixel(padLegend.GetY1()):
             textHeight          = nPixels/padLegend.XtoPixel(padLegend.GetX2()) ;
@@ -229,16 +210,12 @@ class PlotSameMixed:
         # plot labels
         alice           = TPaveText(startTextX, startTextY, startTextX + 2*textHeight, startTextY - 2*differenceText+0.2, "NDC")
         alice.AddText(textAlice)
-        # TLatex(startTextX, startTextY, textAlice);
         SetStyleTLatex( alice, textHeight*3, 1, 1, 42, True);
         alice.Draw();
-        # self.PlotLabelsInvMassInPtPlots ( startTextX, startTextY, textHeight, differenceText, textAlice, dateDummy, fEnergy, fDecayChannel, fDetectionChannel);
-        # latexDate       = TLatex(startTextX, (startTextY-1.25*differenceText), dateDummy);
         latexPeriod    = TPaveText(startTextX, (startTextY-4*differenceText), startTextX + 2*textHeight, (startTextY-3*differenceText)+0.2, "NDC")
         latexPeriod.AddText(Period)
         SetStyleTLatex( latexPeriod, textHeight*3, 1, 1, 42, True);
         latexPeriod.Draw();
-        # energy          = TLatex(startTextX, (startTextY-2.25*differenceText), fEnergy);
         energy       = TPaveText(startTextX, (startTextY-8*differenceText), startTextX + 2*textHeight, (startTextY-4*differenceText)+0.2, "NDC")
         energy.AddText(fEnergy)
         SetStyleTLatex( energy, textHeight*3, 1, 1, 42, True);
@@ -248,17 +225,7 @@ class PlotSameMixed:
         events.AddText(fMonteCarloInfo)
         SetStyleTLatex( events, textHeight*3, 1, 1, 42, True);
         events.Draw();
-        # # process         = TLatex(startTextX, (startTextY-3.25*differenceText), fDecayChannel);
-        # process     = TPaveText(startTextX, (startTextY-3.25*differenceText), startTextX + textHeight, (startTextY-3.25*differenceText)+0.2, "NDC")
-        # process.AddText(fDecayChannel)
-        # self.SetStyleTLatex( process, textHeight*1, 1, 1, 42, True);
-        # process.Draw();
-        # # detprocess      = TLatex(startTextX, (startTextY-4.25*differenceText), fDetectionChannel);
-        # detprocess  = TPaveText(startTextX, (startTextY-4.25*differenceText), startTextX + textHeight, (startTextY-4.25*differenceText)+0.2, "NDC")
-        # detprocess.AddText(fDetectionChannel)
-        # self.SetStyleTLatex( detprocess, textHeight*1, 1, 1, 42, True);
-        # detprocess.Draw();
-        #        
+     
         legendData     = self.GetAndSetLegend2(  startTextX, startTextY-8*differenceText, 0.8,  startTextY-20*differenceText -0.02, 3*nPixels, columnsLegend, TString(""), 43, marginWidthLeg);
         markersize       = fHistoSamePtBinPlot[exampleBin].GetMarkerSize();
         fHistoSamePtBinPlot[exampleBin].SetMarkerSize(markersize);
@@ -266,7 +233,6 @@ class PlotSameMixed:
         markersize       = fHistoSamePtBinPlot[exampleBin].GetMarkerSize();
         fHistoMixedPtBinPlot[exampleBin].SetMarkerSize(markersize);
         legendData.AddEntry(fHistoMixedPtBinPlot[exampleBin], "mixed evt. #it{{M}}{} (scaled)".format(decayChannel), "ep");
-        # legendData.AddEntry(line2, "fitting range", "l")
         legendData.AddEntry(line4, "integration rang for scaling", "l")
         legendData.Draw();
 

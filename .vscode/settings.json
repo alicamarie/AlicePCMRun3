@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "generate.C": "cpp",
+        "plotting_invariant_mass.C": "cpp"
+    }
+}

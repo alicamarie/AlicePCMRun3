@@ -26,17 +26,12 @@ period_mc = "LHC23d1k";
 period_data = "LHC22f"
 suffix = "AnyTrack";
 filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
-# # filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
-# filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
-# # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
-
 filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155756_LHC22f_pass4.root"
-# filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147812_LHC23d1k.root"
 
 config_file = "/Users/alicamarieenderich/202312_material_budget_code/config_pp_13.6TeV_LHC22f_material.yml"
 with open(config_file, "r", encoding="utf-8") as config_yml:
     config = yaml.safe_load(config_yml)
-date = "presentation"  #"this_thesis"# datetime.date.today().strftime("%Y%m%d");
+date = "this_thesis"; #"presentation"  #"this_thesis"# datetime.date.today().strftime("%Y%m%d");
 folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
 os.makedirs(folder, exist_ok=True);
 
@@ -123,20 +118,20 @@ os.makedirs(folder, exist_ok=True);
 # mctype = "gen"
 # zoom = 100
 # circle ="circle"
-# draw_hPhotonRxy_mc_gen(suffix, "log", "gen" , 100, "", folder, date);
-draw_hPhotonRxy_mc_gen(suffix, "log", "gen" , 100, "circle", folder, date);
-# print("draw_hPhotonRxy_mc_gen done")
-# draw_hPhotonRxy_mc_rec(suffix, "log", "rec", 100, "", folder, date)
-# print("draw_hPhotonRxy_mc_rec done")
+draw_hPhotonRxy_mc_gen(suffix, "log", "gen" , 100, "", folder, date);
+# draw_hPhotonRxy_mc_gen(suffix, "log", "gen" , 100, "circle", folder, date);
+# # print("draw_hPhotonRxy_mc_gen done")
+draw_hPhotonRxy_mc_rec(suffix, "log", "rec", 100, "", folder, date)
+# # print("draw_hPhotonRxy_mc_rec done")
 
 draw_hPhotonRxy_data(filename_data, filename_mc, cutname, suffix, folder, date);
-print("draw_hPhotonRxy_data done")
+# print("draw_hPhotonRxy_data done")
 outname         = os.path.join(folder,"{0}_PhotonPhivsRxy.root".format(date));
 outfile         = TFile(outname, "RECREATE");
-draw_hPhotonRxy_vs_Phi_mc_gen(suffix, "log", outfile, "gen", folder, date);
-print("draw_hPhotonRxy_vs_Phi_mc_gen done")
-draw_hPhotonRxy_vs_Phi_mc_rec(suffix, "log", outfile, "rec", folder, date); 
+# draw_hPhotonRxy_vs_Phi_mc_gen(suffix, "log", outfile, "gen", folder, date);
+# print("draw_hPhotonRxy_vs_Phi_mc_gen done")
+# draw_hPhotonRxy_vs_Phi_mc_rec(suffix, "log", outfile, "rec", folder, date); 
 # draw_material_RZ(filename_data, filename_mc, suffix, 40, "wire", False, folder, date);
 # draw_material_RZ(filename_data, filename_mc, suffix, 100, "complete_comparison", False,folder, date);
-draw_material_RZ(filename_data, filename_mc, suffix, 100, "strcutures", True,folder, date);
+# draw_material_RZ(filename_data, filename_mc, suffix, 100, "strcutures", True,folder, date);
 # draw_AP_with_cuts(filename_data, filename_mc, cutname, suffix, folder, date)

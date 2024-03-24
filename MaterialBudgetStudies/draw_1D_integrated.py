@@ -27,37 +27,6 @@ class draw_1D_integrated:
     def __init__(self):
         print("default constructor is called");
     def __init__(self, filename_data, filename_mc, cutname, folder, period, suffix):
-        # self.rootfile_data = TFile.Open(filename_data, "READ");
-        # self.rootfile_mc   = TFile.Open(filename_mc  , "READ");
-
-        # self.rootdir_mc_gen  = self.rootfile_mc.Get("pcm-qc-mc")
-        # self.list_gen        = self.rootdir_mc_gen.Get("Generated");
-        # self.list_ev_mc_gen     = self.rootdir_mc_gen.Get("Event");
-        # # self.list_ev_mc_gen  = self.list_ev_gen.FindObject("PCMPCM");
-        # self.rootdir_mc_rec  = self.rootfile_mc.Get("material-budget-mc");
-        # self.list_v0_mc_rec  = self.rootdir_mc_rec.Get("V0");
-        # self.list_ev_rec     = self.rootdir_mc_rec.Get("Event")
-        # self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMPCM");
-        # self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
-
-        # self.h1nch_mc_gen    = self.list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
-        # self.nev_gen         = self.h1nch_mc_gen.GetEntries();
-        # self.nch_gen         = self.h1nch_mc_gen.GetMean();
-
-        # self.h1nch_mc_rec    = self.list_ev_mc_rec.FindObject("hMultNTracksPV");
-        # self.nch_rec         = self.h1nch_mc_rec.GetMean();
-        # self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-    
-        # self.rootdir_data    = self.rootfile_data.Get("material-budget");
-        # self.list_v0_data    = self.rootdir_data.Get("V0");
-        # self.list_ev_data_1  = self.rootdir_data.Get("Event");
-        # self.list_ev_data    = self.list_ev_data_1.FindObject("PCMDalitzEE");
-        # self.list_cut_data   = self.list_v0_data.FindObject(cutname);
-
-        # self.h1nch_data      = self.list_ev_data.FindObject("hMultNTracksPV");
-        # self.nev_data        = self.h1nch_data.GetEntries();
-        # self.nch_data        = self.h1nch_data.GetMean();
-    
         self.cutname = cutname;
         self.folder = folder;
         self.period = period;
@@ -82,14 +51,10 @@ class draw_1D_integrated:
         self.h1nch_mc_gen    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV").Clone("h1mult");
         self.nev_gen         = self.h1nch_mc_gen.GetEntries();
         self.nch_gen         = self.h1nch_mc_gen.GetMean();
-        # print("nev_gen  = {0:e}".format(self.nev_gen));
-        # print("nch_gen  = {0:e}".format(self.nch_gen));  
 
         self.h1nch_mc_rec    = self.list_ev_mc_pcm.FindObject("hMultNTracksPV");
         self.nch_rec         = self.h1nch_mc_rec.GetMean();
         self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-        # print("nev_rec  = {0:e}".format(self.nev_rec));
-        # print("nch_rec  = {0:e}".format(self.nch_rec));
     
         self.rootdir_data    = self.rootfile_data.Get("material-budget");
         self.list_v0_data    = self.rootdir_data.Get("V0");
@@ -101,18 +66,9 @@ class draw_1D_integrated:
         self.h1nch_data      = self.list_ev_data_pcm.FindObject("hMultNTracksPV");
         self.nev_data        = self.h1nch_data.GetEntries();
         self.nch_data        = self.h1nch_data.GetMean();
-        # print("nev_data = {0:e}".format(self.nev_data));
-        # print("nch_data = {0:e}".format(self.nch_data)); 
-    
-        # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
-        # self.period_data = period_data;
-        # self.period_mc = period_mc
         self.suffix = suffix;
-        # with open(config, "r", encoding="utf-8") as config_yml:
-        #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
-        # self.config = config
         self.arr_rxy = np.array([0,1,2,3,4,5], dtype=float);
 
     def __del__(self):
@@ -131,9 +87,7 @@ class draw_1D_integrated:
         h1_mc_rec.SetDirectory(0);
         ROOT.SetOwnership(h1_mc_rec, False);
         h1_mc_rec.Sumw2();
-        #h1_mc_rec.RebinX(2);
         h1_mc_rec.Scale(1,"width");
-        #h1_mc_rec.Scale(1/dr);
         h1_mc_rec.Scale(1/self.nev_rec);
         h1_mc_rec.Scale(1/self.nch_rec);#nch
         make_common_style(h1_mc_rec, 20, 1.0, kRed+1, 1, 0);
@@ -158,7 +112,6 @@ class draw_1D_integrated:
         h1_data.SetDirectory(0);
         ROOT.SetOwnership(h1_data, False);
         h1_data.Sumw2();
-        #h1_data.RebinX(2);
         h1_data.Scale(1,"width");
         h1_data.Scale(1/self.nev_data);
         h1_data.Scale(1/self.nch_data);
@@ -178,15 +131,13 @@ class draw_1D_integrated:
         p1.SetPad(0,0.3,1,1);
         p1.SetMargin(0.15,0.02,0.,0.15);
         p1.SetTicks(1,1);
-        # p1.SetLogy();
         if generated == True:
             ymin = 1e-3
             ymax = 5*1e-1
         frame1 = p1.DrawFrame(0, ymin, TMath.TwoPi(), ymax);
         frame1.GetXaxis().SetTitle("conversion point #it{#varphi} (rad.)");
         frame1.GetYaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d#it{N}_{#gamma}}{d#it{#varphi}}(rad.)^{-1}");
-        # frame1.GetYaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d^{2}#it{N}_{#gamma}}{d#it{r}_{xy} d#it{#eta}} (cm)^{#minus1}");
-        
+
         FrameSettings(frame1)
         if generated == True:
             gPad.SetLogy();       
@@ -227,7 +178,6 @@ class draw_1D_integrated:
         p2.SetPad(0,0,1,0.3);
         p2.SetMargin(0.15,0.02,0.22,0.0);
         p2.SetTicks(1,1);
-        #p2.SetLogy(1);
 
         frame2 = p2.DrawFrame(0,0.,TMath.TwoPi(),2.);
         frame2.GetXaxis().SetTitle("#it{#varphi} (rad.)");
@@ -257,7 +207,6 @@ class draw_1D_integrated:
         ROOT.SetOwnership(line2,False); 
 
         h1ratio = h1_data.Clone("h1ratio");
-        #make_common_style(h1ratio, 20, 1.0, kRed+1, 1, 0);
         h1ratio.Reset();
         h1ratio.Sumw2();
         h1ratio.Divide(h1_data, h1_mc_rec, 1., 1., "G");
@@ -277,14 +226,10 @@ class draw_1D_integrated:
 
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "ratio \pm 5%", "l")
-        # if generated == True:
-        #     leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -310,9 +255,7 @@ class draw_1D_integrated:
         h1_mc_rec.SetDirectory(0);
         ROOT.SetOwnership(h1_mc_rec, False);
         h1_mc_rec.Sumw2();
-        #h1_mc_rec.RebinX(2);
         h1_mc_rec.Scale(1,"width");
-        #h1_mc_rec.Scale(1/dr);
         h1_mc_rec.Scale(1/self.nev_rec);
         h1_mc_rec.Scale(1/self.nch_rec);#nch
         h1_mc_rec.GetXaxis().SetRangeUser(0.,90.)
@@ -494,7 +437,6 @@ class draw_1D_integrated:
             ROOT.SetOwnership(line11,False);
 
         h1ratio = h1_data.Clone("h1ratio");
-        #make_common_style(h1ratio, 20, 1.0, kRed+1, 1, 0);
         h1ratio.Reset();
         h1ratio.Sumw2();
         h1ratio.Divide(h1_data, h1_mc_rec, 1., 1., "G");
@@ -507,7 +449,6 @@ class draw_1D_integrated:
         h1ratio1.Reset();
         h1ratio1.Sumw2();
         h1ratio1.Divide(h1_mc_gen, h1_mc_rec, 1., 1., "G");
-        #h1ratio1.Draw("E0,same");
         h1ratio1.SetDirectory(0);
         ROOT.SetOwnership(h1ratio1,False);
 
@@ -523,14 +464,10 @@ class draw_1D_integrated:
         
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
-        leg.AddEntry(line2  , "ratio \pm 5%", "l")
-        # if generated == True:
-        #     leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
+        leg.AddEntry(line2  , "ratio \pm 5%", "l");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -549,8 +486,6 @@ class draw_1D_integrated:
             self.suffix = self.suffix.replace("_with_cuts", "");
         if generated == True:
             self.suffix = self.suffix.replace("_with_generated", "");
-    #_____________________________________________________________________
-    # add generated when available! right now still missing
 
     def draw_material_eta(self, cuts, generated, date):
 
@@ -559,7 +494,6 @@ class draw_1D_integrated:
         h1_mc_rec.SetDirectory(0);
         ROOT.SetOwnership(h1_mc_rec, False);
         h1_mc_rec.Sumw2();
-        #h1_mc_rec.RebinX(2);
         h1_mc_rec.Scale(1,"width");
         #h1_mc_rec.Scale(1/dr);
         h1_mc_rec.Scale(1/self.nev_rec);
@@ -571,7 +505,6 @@ class draw_1D_integrated:
         h1_data.SetDirectory(0);
         ROOT.SetOwnership(h1_data, False);
         h1_data.Sumw2();
-        #h1_data.RebinX(1);
         h1_data.Scale(1,"width");
         h1_data.Scale(1/self.nev_data);
         h1_data.Scale(1/self.nch_data);
@@ -587,13 +520,11 @@ class draw_1D_integrated:
         p1.SetPad(0,0.3,1,1);
         p1.SetMargin(0.15,0.02,0.,0.15);
         p1.SetTicks(1,1);
-        #p1.SetLogy(1);
 
         frame1 = p1.DrawFrame(-1., -0.3*1e-3, 1., ymax);
         frame1.GetXaxis().SetTitle("conversion point #it{#varphi} (rad.)");
         frame1.GetYaxis().SetTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d#it{N}_{#gamma}}{d#it{#eta}}");
         FrameSettings(frame1)
-        #h1_mc_gen.Draw("E0h,same");
         h1_mc_rec.Draw("E0h,same");
         h1_data.Draw("E0h,same");
 
@@ -667,7 +598,6 @@ class draw_1D_integrated:
         leg.SetFillColor(kWhite);
         leg.SetFillStyle(0);
         leg.SetTextSize(0.045);
-        #leg.AddEntry(h1_mc_gen ,"M.C. gen. (LHC23d1k)","LP");
         leg.AddEntry(h1_data   ,"Data #gamma candidates (LHC22f pass4)","LP");
         leg.AddEntry(h1_mc_rec ,"M.C. rec. primary #gamma (LHC23d1k)","LP");
 
@@ -678,7 +608,6 @@ class draw_1D_integrated:
         p2.SetPad(0,0,1,0.3);
         p2.SetMargin(0.15,0.02,0.22,0.0);
         p2.SetTicks(1,1);
-        #p2.SetLogy(1);
 
         frame2 = p2.DrawFrame(-1.,0.,1.,2.);
         frame2.GetXaxis().SetTitle("#it{#eta}");
@@ -758,10 +687,8 @@ class draw_1D_integrated:
             line2.SetLineWidth(2);
             line2.Draw("");
             ROOT.SetOwnership(line2,False);
-                
 
         h1ratio = h1_data.Clone("h1ratio");
-        #make_common_style(h1ratio, 20, 1.0, kRed+1, 1, 0);
         h1ratio.Reset();
         h1ratio.Sumw2();
         h1ratio.Divide(h1_data, h1_mc_rec, 1., 1., "G");
@@ -771,14 +698,10 @@ class draw_1D_integrated:
 
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "ratio \pm 5%", "l")
-        #if generated == True:
-         #   leg.AddEntry(h1ratio2 ,"Data / M.C. gen.","LP");
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -803,7 +726,6 @@ class draw_1D_integrated:
         h1nch_mc.SetDirectory(0);
         ROOT.SetOwnership(h1nch_mc, False);
         h1nch_mc.Sumw2();
-        #h1_mc_rec.RebinX(2);
         h1nch_mc.Scale(1,"width");
         make_common_style(h1nch_mc, 20, 1.0, kRed+1, 1, 0);
 
@@ -811,7 +733,6 @@ class draw_1D_integrated:
         h1nch_data.SetDirectory(0);
         ROOT.SetOwnership(h1nch_data, False);
         h1nch_data.Sumw2();
-        #h1_data.RebinX(2);
         h1nch_data.Scale(1,"width");
         make_common_style(h1nch_data, 20, 1.0, kBlue+1, 1, 0);
 
@@ -894,7 +815,6 @@ class draw_1D_integrated:
         ROOT.SetOwnership(line2,False); 
 
         h1ratio = h1nch_data.Clone("h1ratio");
-       #make_common_style(h1ratio, 20, 1.0, kRed+1, 1, 0);
         h1ratio.Reset();
         h1ratio.Sumw2();
         h1ratio.Divide(h1nch_data, h1nch_mc, 1., 1., "G");
@@ -904,12 +824,10 @@ class draw_1D_integrated:
 
         leg = RatioLegendSettings()
         leg.AddEntry(h1ratio   ,"Data / M.C. rec.","LP");
-        #leg.AddEntry(h1ratio1 ,"M.C. gen / M.C. rec.","LP");
         leg.AddEntry(line2  , "ratio \pm 5%", "l")
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -919,21 +837,3 @@ class draw_1D_integrated:
         self.rootfile_data.Close();
         self.rootfile_mc  .Close();
         c1.Close();
-
-    #_____________________________________________________________________
-
-# if __name__ == "__main__":
-#     cuts = True
-#     generated = True
-#     cutname = "qc"
-#     period = "LHC23d1k";
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     date = datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True)
-#     draw = draw_1D_integrated(filename_data, filename_mc, cutname, folder, period, suffix)
-#     draw.draw_material_rxy(cuts, generated);
-#     draw.draw_material_phi(cuts, generated);
-#     draw.draw_material_eta(cuts, generated);

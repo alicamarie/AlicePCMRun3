@@ -100,21 +100,13 @@ class PlotRawYieldInvMass:
         histo1.GetYaxis().SetLabelSize(0.02);
         histo1.GetYaxis().SetTitleSize(0.025);
         histo1.GetYaxis().SetDecimals();
-        # histo1.GetYaxis().SetTitleOffset(0.5);
         histo1.GetXaxis().SetTitleSize(0.025);
         histo1.GetXaxis().SetLabelSize(0.02);
         histo1.SetMarkerStyle(kFullCircle);
-        # histo1.SetMarkerColor(1);
-        # histo1.SetLineColor(1);
-        # histo1.SetLineWidth(1);
-       #  histo1.SetMarkerSize(markerSize);
-        # histo1.SetTitleOffset(1.2, "XY");
-        # histo1.SetTitleSize(0.05, "XY");
         histo1.GetYaxis().SetLabelSize(0.05);
         histo1.GetXaxis().SetLabelSize(0.05);
         histo1.GetXaxis().SetNdivisions(507, True);
 
-        # self.make_common_style(histo1, kFullCircle, markerSize, markerColor, 1)
         histo1.SetMarkerStyle(kFullCircle);
         histo1.SetMarkerColor(markerColor);
         histo1.SetMarkerSize(markerSize);
@@ -123,21 +115,6 @@ class PlotRawYieldInvMass:
         histo1.SetFillColor(markerColor);
         histo1.SetFillStyle(0);
         histo1.DrawCopy(drawsettings);
-        # histo1.SetLineStyle(1);
-        # histo1.SetLineColor(4);
-        # histo1.SetMarkerColor(4);
-        # histo1.SetMarkerStyle(24);
-        # histo1.SetLineWidth(1);
-        #histo1.DrawCopy(drawsettings);
-
-        # TitlePlot = TPaveText(0.1, 0.95, 0.2, 1.0, "NDC")
-        # TitlePlot.AddText("{}".format(Title))
-        # # TitlePlot = TLatex(0.1, 0.95, "{}".format(Title));
-        # # TitlePlot.SetNDC();
-        # TitlePlot.SetTextColor(1);
-        # TitlePlot.SetTextSize(0.062);
-        # TitlePlot.Draw();
-    
 
     def SetStyleTLatex( self, text, textSize, lineWidth, textColor = 1, textFont = 42, kNDC = True, align = 11):
         # if kNDC:
@@ -157,34 +134,24 @@ class PlotRawYieldInvMass:
 
         alice           = TPaveText(startTextX, startTextY, startTextX + textHeight, startTextY+0.2, "NDC")
         alice.AddText(textAlice)
-        # TLatex(startTextX, startTextY, textAlice);
         self.SetStyleTLatex( alice, textHeight*1.3, 1, 1, 42, True, textAlign);
         alice.Draw();
-        # latexDate       = TLatex(startTextX, (startTextY-1.25*differenceText), dateDummy);
         latexDate    = TPaveText(startTextX, startTextY, startTextX + textHeight, startTextY+0.2, "NDC")
         latexDate.AddText(dateDummy)
         self.SetStyleTLatex( latexDate, textHeight, 1, 1, 42, True, textAlign);
         latexDate.Draw();
-        # energy          = TLatex(startTextX, (startTextY-2.25*differenceText), fEnergy);
         energy       = TPaveText(startTextX, startTextY, startTextX + textHeight, startTextY+0.2, "NDC")
         energy.AddText(fEnergy)
         self.SetStyleTLatex( energy, textHeight*1, 1, 1, 42, True, textAlign);
         energy.Draw();
-        # process         = TLatex(startTextX, (startTextY-3.25*differenceText), fDecayChannel);
         process     = TPaveText(startTextX, startTextY, startTextX + textHeight, startTextY+0.2, "NDC")
         process.AddText(fEnergy)
         self.SetStyleTLatex( process, textHeight*1, 1, 1, 42, True, textAlign);
         process.Draw();
-        # detprocess      = TLatex(startTextX, (startTextY-4.25*differenceText), fDetectionChannel);
         detprocess  = TPaveText(startTextX, startTextY, startTextX + textHeight, startTextY+0.2, "NDC")
         detprocess.AddText(fDetectionChannel)
         self.SetStyleTLatex( detprocess, textHeight*1, 1, 1, 42, True, textAlign);
         detprocess.Draw();
-        # events          = TLatex();
-        # if textEvents.CompareTo("") != 0 and fNEvents > 0:
-        #     events              = TLatex(startTextX, (startTextY-5.25*differenceText), "{}: {:.1e} events".format(textEvents, fNEvents));
-        #     self.SetStyleTLatex( events, textHeight*1, 1, 1, 42, True, textAlign);
-        #     events.Draw();
     
     def GetAndSetLegend2(self, positionX, positionY, positionXRight, positionYUp, textSize, columns = 1, header= TString(""), textFont = 43, margin = 0):
 
@@ -218,24 +185,11 @@ class PlotRawYieldInvMass:
 
         TGaxis.SetMaxDigits(3);
         npt = len(self.arr_pt);
-        # canvas = TCanvas("c1", "", 3000, 2000)
-        # canvas.SetTicks(1,1);
-        # self.CanvasSettings(canvas, 0.15, 0.15, 0.15, 0.15);
-        # canvas.cd()
-    
-        # pad = TPad("p1", "", -0.0, 0.0, 1.0, 1.0, 0)
-
-        # pad.SetTopMargin(0.15);
-        # pad.SetBottomMargin(0.15);
-        # pad.SetRightMargin(0.15);
-        # pad.SetLeftMargin(0.15); # -> change values later to make neater
 
         titlePt = fHistoParameter[0].GetTitle(); # ACCESS TITLE
 
         yMin_, yMax_ = 1e-8, 1.4*1e-3
         color = [kRed+1, kBlue+1, kGreen+2, kMagenta+2, kCyan+1]
-
-
 
         c1 = TCanvas("c0","c0",0,0,800,800);
         c1.Divide(1,2,1e-3,1e-3);
@@ -296,25 +250,6 @@ class PlotRawYieldInvMass:
 
         c1.cd()
 
-        # frame1 = p1.DrawFrame(0, yMin_, 12, yMax_);
-        # frame1.GetXaxis().SetTitle("#it{p}_{T} (GeV/#it{c})");
-        # frame1.GetYaxis().SetTitle("#frac{d#it{N}}{d#it{p}_{T}} (GeV/#it{c})^{-1}");        
-        # frame1.GetXaxis().SetTitleSize(0.045);
-        # frame1.GetYaxis().SetTitleSize(0.045);
-        # frame1.GetXaxis().SetTitleOffset(1.0);
-        # frame1.GetYaxis().SetTitleOffset(1.52);
-        # frame1.GetXaxis().SetLabelSize(0.045);
-        # frame1.GetYaxis().SetLabelSize(0.045);
-        # frame1.GetYaxis().SetMaxDigits(3);
-        # frame1.GetXaxis().SetLabelOffset(0.01);
-        # frame1.GetYaxis().SetLabelOffset(0.01);
-        # ROOT.SetOwnership(frame1,False);
-
-        # for icut in range(len(fHistoParameter)):
-        #     #fHistoParameter[icut].SetMarkersize(1)
-        #     self.DrawHisto(frame1,fHistoParameter[icut], titlePt,
-        #                 "M_{} (GeV/c^2)".format(decayChannel), "dN_{}/dM_{}".format(decayChannel, decayChannel), color[icut], "E1,same");
-
         txt = TPaveText(0.,0.9,1.,0.95,"NDC");
         txt.SetFillColor(kWhite);
         txt.SetFillStyle(0);
@@ -333,7 +268,7 @@ class PlotRawYieldInvMass:
         txt.SetTextAlign(12);#middle,left
         txt.SetTextFont(42);#helvetica
         txt.SetTextSize(0.02);
-        txt.AddText("ALICE this thesis");
+        txt.AddText("this thesis");
         txt.AddText(Period)
         txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
         txt.Draw();
@@ -345,7 +280,6 @@ class PlotRawYieldInvMass:
         leg.SetFillStyle(0);
         leg.SetTextSize(0.02);
         leg.SetTextFont(42);#helvetica
-        #leg.SetTextAlign(32);#middle,left
         markersize       = fHistoParameter[0].GetMarkerSize();
         for icut in range(len(fHistoParameter)):
             fHistoParameter[icut].SetMarkerSize(markersize);
@@ -353,14 +287,10 @@ class PlotRawYieldInvMass:
         leg.Draw("");
         ROOT.SetOwnership(leg,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
         c1.SaveAs(namePlot.Data());
         c1.Close();
 
-        # del padLegend;
-        # del pad;
         del c1;
-

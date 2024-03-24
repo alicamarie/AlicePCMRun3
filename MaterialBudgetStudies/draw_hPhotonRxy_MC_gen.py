@@ -24,10 +24,6 @@ from FomattingMaterialBudget import FrameSettings, ALICEtext, RatioLegendSetting
 period_data     = "LHC22f";
 period_mc       = "LHC23d1k";
 filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
-# # filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
-# filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
-# # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
-
 filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155756_LHC22f_pass4.root"
 cutname = "analysis_wo_mee";
 
@@ -51,7 +47,6 @@ list_gen_pcmqc        = rootdir_mc_pcmqc.Get("Generated");
 list_ev_mc_pcm  = rootdir_mc_pcmqc.Get("Event");
 h1nch_mc_gen    = list_ev_mc_pcm.FindObject("hMultNTracksPV").Clone("h1mult");
 
-# h1nch_mc_gen    = list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
 nev_gen         = h1nch_mc_gen.GetEntries();
 nch_gen         = h1nch_mc_gen.GetMean();
 
@@ -190,13 +185,8 @@ def draw_hPhotonRxy_mc_gen(suffix, log, mctype, zoom, circle, folder, date):
     hPhotonRxy.SetZTitle("#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #it{N}_{#gamma}");
     hPhotonRxy.GetZaxis().SetTitleOffset(1.9);
 
-    # # For zooming in structure
-    # hPhotonRxy.GetXaxis().SetRangeUser(0, zoom);
-    # hPhotonRxy.GetYaxis().SetRangeUser(0, zoom);
-
     xtitle = "conversion point #it{#varphi} (rad.)"
     ytitle = "#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d^{3}#it{N}_{#gamma}}{d#it{r}_{xy} d#it{#eta} d#it{#varphi}} (cm #upoint rad.)^{#minus1}"
-    # date = datetime.date.today().strftime("%Y%m%d");
     outname = os.path.join(folder, "{0}_material_budget_hPhotonRxy_range{1}_{2}_{3}_{4}_{5}.png".format(date, zoom, circle, mctype, log, suffix))
     plotting_Rxy(hPhotonRxy, xtitle , ytitle , log , "gen", suffix, circle, outname)
     
@@ -218,19 +208,3 @@ def draw_hPhotonRxy_mc_rec(suffix, log, mctype, zoom, circle, folder, date):
     # date = datetime.date.today().strftime("%Y%m%d");
     outname = os.path.join(folder, "{0}_material_budget_hGammaRxy_rec_range{1}_{2}_{3}_{4}_{5}.png".format(date, zoom, circle, mctype, log, suffix))
     plotting_Rxy(hPhotonRxy, xtitle , ytitle , log , "rec", suffix, circle, outname)    
-# if __name__ == "__main__":
-#     period_data     = "LHC22f";
-#     period_mc       = "LHC23d1k";
-#     filename_mc     = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data   = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     cutname = "analysis_wo_mee";
-#     suffix = "" 
-#     date = "this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-
-#     for log in ["log", ""]:
-#         for mctype in ["gen"]:
-#             for zoom in [100]:
-#                 for circle in ["circle", ""]:
-#                     draw_hPhotonRxy_mc_gen(suffix, log, mctype , zoom, circle, folder, date);

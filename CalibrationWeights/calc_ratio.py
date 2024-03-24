@@ -34,54 +34,12 @@ class calc_ratio:
     def __init__(self):
         print("default constructor is called");
     def __init__(self, config, filename_data, filename_mc, cutname, folder, period_data, period_mc, suffix):
-        #print("filename_data = {0} , filename_mc = {1} , cutname = {2}".format(filename_data, filename_mc, cutname));
         self.rootfile_data = TFile.Open(filename_data, "READ");
         self.rootfile_mc   = TFile.Open(filename_mc  , "READ");
-
-        # self.rootdir_mc_gen  = self.rootfile_mc.Get("material-budget-mc")
-        # self.list_gen        = self.rootdir_mc_gen.Get("Generated");
-        # self.list_ev_gen     = self.rootdir_mc_gen.Get("Event");
-        # self.list_ev_mc_gen  = self.list_ev_gen.FindObject("PCMDalitzEE");
-        # self.rootdir_mc_rec  = self.rootfile_mc.Get("material-budget-mc");
-        # self.list_v0_mc_rec  = self.rootdir_mc_rec.Get("V0");
-        # self.list_ev_rec     = self.rootdir_mc_rec.Get("Event")
-        # self.list_ev_mc_rec  = self.list_ev_rec.FindObject("PCMDalitzEE");
-        # self.list_cut_mc_rec = self.list_v0_mc_rec.FindObject(cutname);
-
-        # self.h1nch_mc_gen    = self.list_ev_mc_gen.FindObject("hMultNTracksPV").Clone("h1mult");
-        # self.nev_gen         = self.h1nch_mc_gen.GetEntries();
-        # self.nch_gen         = self.h1nch_mc_gen.GetMean();
-        # # print("nev_gen  = {0:e}".format(self.nev_gen));
-        # # print("nch_gen  = {0:e}".format(self.nch_gen));  
-
-        # self.h1nch_mc_rec    = self.list_ev_mc_rec.FindObject("hMultNTracksPV");
-        # self.nch_rec         = self.h1nch_mc_rec.GetMean();
-        # self.nev_rec         = self.h1nch_mc_rec.GetEntries();
-        # # print("nev_rec  = {0:e}".format(self.nev_rec));
-        # # print("nch_rec  = {0:e}".format(self.nch_rec));
-    
-        # self.rootdir_data    = self.rootfile_data.Get("material-budget");
-        # self.list_v0_data    = self.rootdir_data.Get("V0");
-        # self.list_ev_data_1  = self.rootdir_data.Get("Event");
-        # self.list_ev_data    = self.list_ev_data_1.FindObject("PCMDalitzEE");
-        # self.list_cut_data   = self.list_v0_data.FindObject(cutname);
-
-        # self.h1nch_data      = self.list_ev_data.FindObject("hMultNTracksPV");
-        # self.nev_data        = self.h1nch_data.GetEntries();
-        # self.nch_data        = self.h1nch_data.GetMean();
-        # # print("nev_data = {0:e}".format(self.nev_data));
-        # # print("nch_data = {0:e}".format(self.nch_data)); 
-    
-        # # print("period_data = {0} , period_mc = {1} , config = {2}, suffix = {3}".format(period_data,period_mc, config, suffix));
-        # self.period_data = period_data;
-        # self.period_mc = period_mc
         self.suffix = suffix;
-        # # with open(config, "r", encoding="utf-8") as config_yml:
-        # #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
         self.config = config
-        # self.arr_rxy = np.array([0,1,2,3,4,5], dtype=float);
 
     def __del__(self):
         if self.rootfile_data.IsOpen():
@@ -115,14 +73,6 @@ class calc_ratio:
             h1data_complete.Sumw2()
             h1mc_complete.Sumw2()  
 
-        # #style   
-        #     markerstlye_data = [21, 20, 22]
-        #     markerstlye_mc = [25, 24, 26 ]
-        #     make_common_style(h1data_complete, markerstlye_data[ipt], 1.0, kBlue+1, 1, 0);
-        #     make_common_style(h1mc_complete  , markerstlye_mc[ipt], 1.0, kRed+1, 1, 0);
-        #     ROOT.SetOwnership(h1data_complete, False);
-        #     ROOT.SetOwnership(h1mc_complete, False);
-
             data_list_isospin.append(h1data_complete)
             mc_list_isospin.append(h1mc_complete)
 
@@ -135,30 +85,18 @@ class calc_ratio:
             h1mc_complete = list_wire.FindObject("h1NGamma_mc_pt{0}".format(ipt));
             h1data_complete.SetDirectory(0);
             h1mc_complete.SetDirectory(0);
-            # print(h1data_complete.GetType())
-        #normalization
             h1data_complete.Sumw2()
             h1mc_complete.Sumw2()  
-
-        # #style   
-        #     markerstlye_data = [21, 20, 22]
-        #     markerstlye_mc = [25, 24, 26 ]
-        #     make_common_style(h1data_complete, markerstlye_data[ipt], 1.0, kBlue+1, 1, 0);
-        #     make_common_style(h1mc_complete  , markerstlye_mc[ipt], 1.0, kRed+1, 1, 0);
-        #     ROOT.SetOwnership(h1data_complete, False);
-        #     ROOT.SetOwnership(h1mc_complete, False);
 
             data_list_wire.append(h1data_complete)
             mc_list_wire.append(h1mc_complete)
 
         h1ratio_isospin = []
         for i in range(len(data_list_isospin)):
-            # print("TYPES", type(mc_list_isospin[i]), type(data_list_isospin[i]))
             h1ratio = mc_list_isospin[i].Clone("h1ratio");
             h1ratio.Reset();
             h1ratio.Sumw2();
             h1ratio.Divide(data_list_isospin[i], mc_list_isospin[i], 1., 1., "G");
-            # h1ratio.Draw("E0same");
             h1ratio.SetDirectory(0);
             markerstlye_data = [21, 20, 22]
             markerstlye_mc = [25, 24, 26 ]
@@ -174,7 +112,6 @@ class calc_ratio:
             h1ratio.Reset();
             h1ratio.Sumw2();
             h1ratio.Divide(data_list_wire[i], mc_list_wire[i], 1., 1., "G");
-            # h1ratio.Draw("E0same");
             h1ratio.SetDirectory(0);
             markerstlye_data = [21, 20, 22]
             markerstlye_mc = [25, 24, 26 ]
@@ -191,10 +128,6 @@ class calc_ratio:
         p1.SetPad(0,0.3,1,1);
         p1.SetMargin(0.15,0.02,0.,0.15);
         p1.SetTicks(1,1);
-        # p1.SetLogy();
-
-        #         p2.SetPad(0,0,1,0.2);
-        # p2.SetMargin(0.15,0.02,0.22,0.0);
         frame1 = p1.DrawFrame(0., 0, 90., 4)#(0., ymin, 90, ymax); #(0., 1e-20, 10., 1e-1);#
         frame1.GetXaxis().SetTitle("#it{r}_{xy} (cm)")
         frame1.GetYaxis().SetTitle("Calibration weights");
@@ -208,7 +141,6 @@ class calc_ratio:
             size = [2.0,1.8, 1.6]
             make_common_style(h1ratio_isospin[i], markerstlye_data[i], size[i], color[i], 1, 0);
             make_common_style(h1ratio_wire[i]  , markerstlye_mc[i], size[i], color[i], 1, 0);
-            #mc_list[i].SetLineStyle(2);
             h1ratio_isospin[i].Draw("E0same");
             h1ratio_wire[i].Draw("E0same");
 
@@ -224,37 +156,12 @@ class calc_ratio:
         ROOT.SetOwnership(txt,False);
 
         ALICEtext("thesis")
-
-        # leg = TLegend(0.65,0.50,0.95,0.65);
-        # leg.SetBorderSize(0);
-        # leg.SetFillColor(kWhite);
-        # leg.SetFillStyle(0);
-        # leg.SetTextSize(0.045);
-        # leg.SetTextAlign(32);
-        # leg.SetTextFont(42);#helvetica
-        # for i in range(len(data_list)):
-        #     leg.AddEntry(data_list[i], "#it{{p}}_{{T}} > {0} GeV/c".format(arr_pt_cuts[i]),"LP");
-        #     #leg.AddEntry(h1mc_complete  , "M.C. rec. #gamma (LHC23d1k)","LP");
-        # leg.Draw("");
-        # ROOT.SetOwnership(leg,False);
-
-        # color = [kRed+1,kGreen+2, kBlue+1, kCyan+2, kMagenta+2]
-        # for i in range(len(data_list_isospin)):
-        #     h1ratio = mc_list_isospin[i].Clone("h1ratio");
-        #     h1ratio.Reset();
-        #     h1ratio.Sumw2();
-        #     h1ratio.Divide(data_list_isospin[i], mc_list_isospin[i], 1., 1., "G");
-        #     h1ratio.Draw("E0same");
-        #     h1ratio.SetDirectory(0);
-        #     ROOT.SetOwnership(h1ratio,False);
         
-        leg = TLegend(0.25,0.72,0.40,0.82);
+        leg = TLegend(0.17,0.72,0.35,0.82);
         leg.SetBorderSize(0);
         leg.SetFillColor(kWhite);
         leg.SetFillStyle(0);
-        leg.SetTextSize(0.03);
-        leg.SetTextAlign(12);
-        leg.SetTextFont(42);#helvetica
+        leg.SetTextSize(0.045);
         leg.AddEntry(h1ratio_isospin[0], "Isospin calibration weights #it{#Omega}_{#it{i}}","LP");
         leg.AddEntry(h1ratio_wire[0] , "Wire calibration weights #it{#omega}_{#it{i}}","LP");
         leg.Draw("");
@@ -267,20 +174,10 @@ class calc_ratio:
         cut_in_ratio = 0.5
 
 
-        frame2 = p2.DrawFrame(0.,0.75,90.,2.5);
+        frame2 = p2.DrawFrame(0.,0.6,90.,2.5);
         frame2.GetXaxis().SetTitle("#it{R}_{xy} (cm)");
         frame2.GetYaxis().SetTitle("#it{#omega}_{#it{i}} / #it{#Omega}_{#it{i}}");
         FrameSettingsRatio(frame2)
-
-        # color = [kRed+1,kGreen+2, kBlue+1, kCyan+2, kMagenta+2]
-        # for i in range(len(data_list)):
-        #     h1ratio = mc_list[i].Clone("h1ratio");
-        #     h1ratio.Reset();
-        #     h1ratio.Sumw2();
-        #     h1ratio.Divide(data_list[i], mc_list[i], 1., 1., "G");
-        #     h1ratio.Draw("E0same");
-        #     h1ratio.SetDirectory(0);
-        #     ROOT.SetOwnership(h1ratio,False);
 
         for i in range(len(h1ratio_isospin)):
             h1ratio = h1ratio_isospin[i].Clone("h1ratio");
@@ -290,14 +187,6 @@ class calc_ratio:
             h1ratio.Draw("E0same");
             h1ratio.SetDirectory(0);
             ROOT.SetOwnership(h1ratio,False);
-            # markerstlye_data = [21, 20, 22]
-            # markerstlye_mc = [25, 24, 26 ]
-            # size = [2.0,1.8, 1.6]
-            # make_common_style(h1ratio_isospin[i], markerstlye_data[i], size[i], color[i], 1, 0);
-            # make_common_style(h1ratio_wire[i]  , markerstlye_mc[i], size[i], color[i], 1, 0);
-            # #mc_list[i].SetLineStyle(2);
-            # h1ratio_isospin[i].Draw("E0same");
-            # h1ratio_wire[i].Draw("E0same");
 
         line1 = TLine(0.,1,90,1);
         line1.SetLineColor(kBlack);
@@ -317,7 +206,6 @@ class calc_ratio:
         txt.Draw();
         ROOT.SetOwnership(txt,False);
 
-        # date = datetime.date.today().strftime("%Y%m%d");
         c1.Modified();
         c1.Update();
         ROOT.SetOwnership(c1,False);
@@ -332,7 +220,7 @@ if __name__:
     suffix = "AnyTrack";
     filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147811_LHC22_pass4_lowIR.root"
     filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_147812_LHC23d1k.root"
-    config_file = "config_pp_13.6TeV_LHC22f_material.yml"
+    config_file = "CalibrationWeights/config_pp_13.6TeV_LHC22f_material.yml"
     with open(config_file, "r", encoding="utf-8") as config_yml:
         config = yaml.safe_load(config_yml)
     date = "this_thesis" # datetime.date.today().strftime("%Y%m%d");
@@ -345,7 +233,6 @@ if __name__:
         elif type == "mc":
             file = filename_mc;
     NGamma = calc_ratio(config, filename_data, filename_mc, cutname, folder, period_data, period_mc, suffix);
-    # NGamma.run(file, type, date);
 
     NGamma = calc_ratio(config, filename_data, filename_mc, cutname, folder, period_data, period_mc, suffix);
     arr_pt_cuts = config["common"]["pt_cuts"];

@@ -36,8 +36,6 @@ class make_2D_Eta_vs_Phi:
         self.period_data = period_data;
         self.period_mc = period_mc
         self.suffix = suffix;
-        # with open(config, "r", encoding="utf-8") as config_yml:
-        #     self.config = yaml.safe_load(config_yml)
         self.folder = folder;
         self.cutname = cutname
         self.config = config
@@ -66,7 +64,6 @@ class make_2D_Eta_vs_Phi:
         outlist.SetName("outlist");
         outlist.Add(h1mult);
         outlist.Add(hs);
-        #arr_rxy = np.array(get_bin_edges(hs.GetAxis(0)), dtype=float);
         arr_phi = np.array(self.get_bin_edges(hs.GetAxis(1)), dtype=float);
         arr_eta = np.array(self.get_bin_edges(hs.GetAxis(2)), dtype=float);
         hs.Sumw2();
@@ -103,17 +100,6 @@ class make_2D_Eta_vs_Phi:
         rootdire = rootfile.Get(taskname); 
         list_v0 = rootdire.Get("V0");
         list_ev     = rootdire_pcm.Get("Event");
-        #list_ev = list_ev_1.FindObject("PCMPCM");
-        # if type == "mc":
-        #    list_ev = list_ev_1#.FindObject("PCMPCM");
-        # if type == "data":
-        #    list_ev = list_ev_1#.FindObject("PCMDalitzEE");
-
-        # pcmname = "pcm-qc";
-        # if type == "mc":
-        #     pcmname = "pcm-qc-mc";
-        # rootdire_pcm = rootfile.Get(pcmname); 
-        # date = datetime.date.today().strftime("%Y%m%d");
         outname = os.path.join(self.folder, "{0}_material_budget_eta_vs_phi_{1}_{2}_{3}TeV_{4}{5}.root".format(date, type, self.config["common"]["system"], self.config["common"]["energy"], self.config["common"]["period"], self.suffix));
         outfile = TFile(outname, "RECREATE");
 
@@ -196,8 +182,6 @@ class make_2D_Eta_vs_Phi:
 
         h2data_complete.Draw("COLZ SAME")
         max_z_value_data = h2data_complete.GetMaximum()
-        
-
 
         txt = TPaveText(0.0,0.9,1.0,0.92,"NDC");
         txt.SetFillColor(kWhite);
@@ -222,7 +206,6 @@ class make_2D_Eta_vs_Phi:
         ROOT.SetOwnership(txt,False);
 
         p2 = c1.cd(2);
-        #p2.SetPad(0,0,1,0.35);
         p2.SetMargin(0.1,0.13,0.22,0.05);
         p2.SetTicks(1,1);
 
@@ -270,31 +253,3 @@ class make_2D_Eta_vs_Phi:
 
         if rid == 3:
             self.find_phi_for_eta(h2data_complete,0, os.path.join(self.folder, "{0}_2D_Eta_vs_Phi_phi_values_for_r3.txt".format(date)));
-
-# if __name__ == "__main__":
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_mc = "/Users/alicamarieenderich/AnalysisResults_LHC23d1k_125889.root"
-#     filename_data = "/Users/alicamarieenderich/AnalysisResults_LHC22f4_new_125184.root"
-#     config_file = "/Users/alicamarieenderich/material_budget_FSP_update/config_pp_13.6TeV_LHC22f_material.yml"
-#     with open(config_file, "r", encoding="utf-8") as config_yml:
-#         config = yaml.safe_load(config_yml)
-#     date = datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-#     for type in ["data", "mc"]:
-#         if type == "data": 
-#             file = filename_data
-#         elif type == "mc":
-#             file = filename_mc;
-#         draw_eta_vs_phi = make_2D_Eta_vs_Phi(config, suffix, folder, period_data, period_mc, cutname);
-#         draw_eta_vs_phi.run(file, type);
-
-#     filename_mc_eta_vs_phi = os.path.join(folder, "{0}_material_budget_eta_vs_phi_mc_{1}_{2}TeV_{3}{4}.root".format(date, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix));
-#     filename_data_eta_vs_phi = os.path.join(folder, "{0}_material_budget_eta_vs_phi_data_{1}_{2}TeV_{3}{4}.root".format(date, config["common"]["system"], config["common"]["energy"], config["common"]["period"], suffix));
-
-#  # for r in range(7):
-    #     for log in ["log", ""]:
-    #         draw_eta_vs_phi.draw_material_z_vs_phi(filename_data_eta_vs_phi, filename_mc_eta_vs_phi, r, cutname, log);

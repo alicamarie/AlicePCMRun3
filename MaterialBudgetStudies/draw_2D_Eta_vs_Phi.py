@@ -55,10 +55,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     h2mc_complete = list_mc.FindObject("h2etaphi_r{0:d}".format(rid));
     h2data_complete.SetDirectory(0);
     h2mc_complete.SetDirectory(0);
- 
-#normalization
-   #h2data_complete.Sumw2()
-    #h2mc_complete.Sumw2()  
 
 #style   
     make_common_style(h2data_complete, 20, 1.0, kBlue+1, 1, 0);
@@ -71,7 +67,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     c1.Divide(1,2,1e-5,1e-5); 
 
     p1 = c1.cd(1);
-    #p1.SetPad(0,0.35,1,1);
     p1.SetMargin(0.1,0.13,0.13,0.2);
     p1.SetTicks(1,1);
 
@@ -144,7 +139,6 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
-    # date = datetime.date.today().strftime("%Y%m%d");
 
     if log == "log":
         outname = os.path.join(folder, "{0}_pp_13.6TeV_{1}_material_budget_eta_vs_phi_r{2}_log_{3}_{4}.png".format(date, period, rid, cutname, suffix))
@@ -156,17 +150,3 @@ def draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period, 
 
     if rid == 3:
         find_phi_for_eta(h2data_complete,0, os.path.join(folder, "{0}_2D_Eta_vs_Phi_phi_values_for_r3.txt".format(date)));
-
-# if __name__ == "__main__":
-#     cutname = "qc"
-#     period_mc = "LHC23d1k";
-#     period_data = "LHC22f"
-#     suffix = "AnyTrack";
-#     filename_data = "/Users/alicamarieenderich/20231028_material_budget_plots/20231028_material_budget_eta_vs_phi_data_pp_13.6TeV_LHC22fAnyTrack.root" 
-#     filename_mc = "/Users/alicamarieenderich/20231028_material_budget_plots/20231028_material_budget_eta_vs_phi_mc_pp_13.6TeV_LHC22fAnyTrack.root" 
-#     date ="this_thesis" #datetime.date.today().strftime("%Y%m%d");
-#     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-#     os.makedirs(folder, exist_ok=True);
-#     for r in range(7):
-#         for log in ["log", ""]:
-#                 draw_material_z_vs_phi(folder, filename_data, filename_mc, cutname, period_data, r, suffix, log, date);

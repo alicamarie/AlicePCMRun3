@@ -22,19 +22,8 @@ from FomattingMaterialBudget import FrameSettings, ALICEtext, RatioLegendSetting
 period_data     = "LHC22f";
 period_mc       = "LHC23d1k";
 filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
-# filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
 filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
-# filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
 cutname         = "analysis_wo_mee";
-# date = datetime.date.today().strftime("%Y%m%d");
-# folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
-# os.makedirs(folder, exist_ok=True);
-# outname         = os.path.join(folder,"{0}_PhotonPhivsRxy.root".format(date));
-# outfile         = TFile(outname, "RECREATE");
-
-# filename_plots = outname
-# file_plots = TFile.Open(filename_plots, "READ");
-# file_plots.ls()
 
 r_bins          = [0, 14, 30, 42, 58, 69, 90]#, 180]
 arr_rxy         = r_bins
@@ -51,7 +40,6 @@ rootdir_mc_rec  = rootfile_mc.Get("pcm-qc-mc");
 list_generated = rootdir_mc_rec.Get("Generated")
 list_v0_mc_rec  = rootdir_mc_rec.Get("V0");
 list_ev_mc_rec     = rootdir_mc_rec.Get("Event")
-# list_ev_mc_rec  = list_ev_rec.FindObject("PCMPCM");
 
 list_cut_mc_rec = list_v0_mc_rec.FindObject("qc");
 
@@ -123,7 +111,6 @@ def plotting_Rxy(histogram, xtitle, ytitle, log , mctype, suffix, folder, date):
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
-    # date = datetime.date.today().strftime("%Y%m%d");
     c1.SaveAs(os.path.join(folder,"{0}_material_budget_hPhotonRxy_{1}_{2}_{3}.pdf".format(date, mctype, log, suffix)));
     c1.Close();
 
@@ -169,7 +156,6 @@ def plotting_Phi_vs_Rxy(histogram, xtitle, ytitle, log , mctype, suffix, folder,
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
-    # date = datetime.date.today().strftime("%Y%m%d");
     c1.SaveAs(os.path.join(folder,"{0}_material_budget_hPhotonPhivsRxy_{1}_{2}_{3}.png".format(date, mctype, log, suffix)));
     c1.Close();
 
@@ -262,15 +248,12 @@ def draw_hPhotonRxy_vs_Phi_mc_gen(suffix, log, outfile, gen, folder, date):
         hPhoton_ir.SetXTitle("#varphi (rad.)");
         hPhoton_ir.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}}");
         hPhoton_ir.Scale(1./dr);
-        #hPhoton_ir.Scale(1, "width");
         outfile.WriteTObject(hPhoton_ir);
         ROOT.SetOwnership(hPhoton_ir,False);
         # plotting_Phi_for_R(hPhoton_ir, "#varphi (rad.)","#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}}", log , gen, suffix, ir)
 #________________________________________________
 
 def draw_hPhotonRxy_vs_Phi_mc_rec(suffix, log, outfile, gen, folder, date):
-    #rootdir_mat_bud_rec = rootdir_mc_gen.Get("VO")
-    # list_rec.ls()
     mat_bud_rec_qc = list_rec.FindObject("qc")
     hs_mc_rec = mat_bud_rec_qc.FindObject("hs_conv_point").Clone("hs_rec");
 
@@ -287,19 +270,13 @@ def draw_hPhotonRxy_vs_Phi_mc_rec(suffix, log, outfile, gen, folder, date):
 
         plotting_Rxy(hPhotonRxy, "conversion point #it{#varphi} (rad.)", "#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d^{3}#it{N}_{#gamma}}{d#it{R}_{xy} d#it{#eta} d#it{#varphi}} (cm #upoint rad.)^{#minus1}", log , gen, suffix, folder, date)
 
-    #hs = list_cut_mc_rec.FindObject("hs_conv_point").Clone("h_conv_point_rec");   
-    #outfile.WriteTObject(hs);
-
-
     hPhotonPhivsRxy = hs_mc_rec.Projection(1, 2, "");
-    #hPhotonPhivsRxy = list_cut_mc_rec.FindObject("hGammaRxy_recalc").Clone("h_conv_point_rec"); 
     hPhotonPhivsRxy.SetName("hPhotonPhivsRxy_rec");
     hPhotonPhivsRxy.SetTitle("conversion point #it{{R}}_{{xy}} vs. #it{{#varphi}}");
     hPhotonPhivsRxy.SetXTitle("#varphi (rad.)");
     hPhotonPhivsRxy.SetYTitle("R_{xy} (cm)");
     hPhotonPhivsRxy.SetZTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}} ");
     hPhotonPhivsRxy.GetZaxis().SetTitleOffset(1.9);
-   # hPhotonPhivsRxy.Scale(1, "width");
     hPhotonPhivsRxy.Scale(1./nev_rec);
     hPhotonPhivsRxy.Scale(1./nch_rec);
     hPhotonPhivsRxy.Sumw2();
@@ -308,28 +285,7 @@ def draw_hPhotonRxy_vs_Phi_mc_rec(suffix, log, outfile, gen, folder, date):
 
     plotting_Phi_vs_Rxy(hPhotonPhivsRxy, "conversion point #it{#varphi} (rad.)", "#frac{1}{<#it{N}_{ch}^{PV}>} #frac{1}{#it{N}_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}} (cm #upoint rad.)^{#minus1}", log , gen, suffix, folder, date)
 
-    #loop over r_bins
-    # for ir in range(0, len(r_bins)-1):
-    #     r1 = r_bins[ir];
-    #     r2 = r_bins[ir+1];
-    #     dr = r2 - r1;
-    #     bin_r1 = hPhotonPhivsRxy.GetYaxis().FindBin(r1 + 1e-6);
-    #     bin_r2 = hPhotonPhivsRxy.GetYaxis().FindBin(r2 - 1e-6);
-
-    #     hPhoton_ir = hPhotonPhivsRxy.ProjectionX("hPhotonPhi_r{0:d}_rec".format(ir), bin_r1, bin_r2, "");
-    #     hPhoton_ir.SetTitle("conversion point #it{{#varphi}} in {0:3.2f} cm < #it{{R}}_{{xy}} < {1:3.2f} cm".format(r1, r2));
-    #     hPhoton_ir.SetXTitle("#varphi (rad.)");
-    #     hPhoton_ir.SetYTitle("#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}}");
-    #     hPhoton_ir.Scale(1./dr);
-    #     #hPhoton_ir.Scale(1, "width");
-    #     outfile.WriteTObject(hPhoton_ir);
-    #     ROOT.SetOwnership(hPhoton_ir,False);
-
-        # plotting_Phi_for_R(hPhoton_ir, "#varphi (rad.)", "#frac{1}{<N_{ch}^{PV}>} #frac{1}{N_{ev}} #frac{d^{2}N_{#gamma}}{d#it{R}_{xy} d#it{#varphi}}", log , gen, suffix, ir)
-
 def plot_ratio(i, date):
-
-    # date = datetime.date.today().strftime("%Y%m%d");
     folder = "/Users/alicamarieenderich/{0}_material_budget_plots/".format(date);  
     os.makedirs(folder, exist_ok=True);
     outname         = os.path.join(folder,"{0}_PhotonPhivsRxy.root".format(date));
@@ -388,17 +344,6 @@ def plot_ratio(i, date):
     txt.Draw();
     ROOT.SetOwnership(txt,False);
 
-    # txt = TPaveText(0.2,0.72,0.4,0.92,"NDC");
-    # txt.SetFillColor(kWhite);
-    # txt.SetFillStyle(0);
-    # txt.SetBorderSize(0);
-    # txt.SetTextAlign(12);#middle,left
-    # txt.SetTextFont(42);#helvetica
-    # txt.SetTextSize(0.05);
-    # txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
-    # txt.Draw();
-    # ROOT.SetOwnership(txt,False);
-
     txt = TPaveText(0.7,0.8,0.77,0.85,"NDC");
     txt.SetFillColor(kWhite);
     txt.SetFillStyle(0);
@@ -453,7 +398,6 @@ def plot_ratio(i, date):
     line1.Draw("");
     ROOT.SetOwnership(line1,False);
 
-    # date = datetime.date.today().strftime("%Y%m%d");
     c1.Modified();
     c1.Update();
     ROOT.SetOwnership(c1,False);
@@ -465,9 +409,6 @@ if __name__ == "__main__":
     period_data     = "LHC22f";
     period_mc       = "LHC23d1k";
     filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155278_LHC23d1k.root"
-    # # filename_mc = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC23d1k_125889.root"
-    # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_148193_LHC22f_apass4.root"
-    # # filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_LHC22f4_new_125184.root"
 
     filename_data = "/Users/alicamarieenderich/AnalysisResults/AnalysisResults_155756_LHC22f_pass4.root"
     cutname         = "analysis_wo_mee";
@@ -479,7 +420,3 @@ if __name__ == "__main__":
     suffix = ""
 
     draw_hPhotonRxy_vs_Phi_mc_gen(suffix, "log", outfile, "gen", folder, date);
-    # draw_hPhotonRxy_vs_Phi_mc_rec(suffix, "log", outfile, "rec", folder, date); 
-
-    # for r in range(6):
-    #     plot_ratio(r)

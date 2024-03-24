@@ -101,7 +101,7 @@ def draw_comparison_parameters(list_data0, index, fit_variable, date, period_str
         txt.SetTextAlign(32);#middle,left
         txt.SetTextFont(42);#helvetica
         txt.SetTextSize(0.03);
-        txt.AddText("ALICE this thesis");
+        txt.AddText("this thesis");
         txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
         txt.Draw();
         ROOT.SetOwnership(txt,False);

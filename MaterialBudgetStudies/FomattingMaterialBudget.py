@@ -41,10 +41,10 @@ def ALICEtext(thesis):
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.045);
     if thesis == "thesis":
-        txt.AddText("ALICE");
+        # txt.AddText("ALICE");
         txt.AddText("this thesis")
     if thesis == "simulation":
-        txt.AddText("ALICE simulation")
+        txt.AddText("this thesis")#("ALICE simulation")
     txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
     txt.Draw();
     ROOT.SetOwnership(txt,False);
@@ -113,10 +113,10 @@ def ALICEtext2Dtwoplots(thesis,oneortwo):
         txt.SetTextFont(42);#helvetica
         txt.SetTextSize(0.04);
         if thesis == "thesis":
-                txt.AddText("ALICE");
+                # txt.AddText("ALICE");
                 txt.AddText("this thesis")
         if thesis == "simulation":
-                txt.AddText("ALICE simulation")
+                txt.AddText("this thesis")#txt.AddText("ALICE simulation")
         txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
         txt.Draw();
         ROOT.SetOwnership(txt,False);
@@ -130,10 +130,10 @@ def ALICEtext2D(thesis):
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.03);
     if thesis == "thesis":
-        txt.AddText("ALICE");
+        # txt.AddText("ALICE");
         txt.AddText("this thesis")
     if thesis == "simulation":
-        txt.AddText("ALICE simulation")
+        txt.AddText("this thesis")#txt.AddText("ALICE simulation")
     txt.AddText("pp at #sqrt{#it{s}} = 13.6 TeV");
     txt.Draw();
     ROOT.SetOwnership(txt,False);

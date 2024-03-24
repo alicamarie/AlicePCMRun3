@@ -33,7 +33,7 @@ def FrameSettings(frame1):
     frame1.GetYaxis().SetNdivisions(5, 5, 0, kTRUE)
 
 def ALICEtext(thesis):
-    txt = TPaveText(0.90,0.67,0.95,0.82,"NDC");
+    txt = TPaveText(0.90,0.72,0.95,0.82,"NDC");    
     txt.SetFillColor(kWhite);
     txt.SetFillStyle(0);
     txt.SetBorderSize(0);
@@ -41,7 +41,7 @@ def ALICEtext(thesis):
     txt.SetTextFont(42);#helvetica
     txt.SetTextSize(0.045);
     if thesis == "thesis":
-        txt.AddText("ALICE");
+        # txt.AddText("ALICE");
         txt.AddText("this thesis")
     if thesis == "simulation":
         txt.AddText("ALICE simulation")
